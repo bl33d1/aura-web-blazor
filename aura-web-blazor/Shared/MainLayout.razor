@@ -1,0 +1,37 @@
+﻿@inherits LayoutComponentBase
+
+<PageTitle>aura-web-blazor</PageTitle>
+
+<MudThemeProvider @bind-IsDarkMode="@_isDarkMode" Theme="_theme"/>
+
+<MudLayout  Style="max-width:600px;" Class="mx-auto mt-5">
+    <MudAppBar Elevation="1">
+        <MudButton Variant="Variant.Text" Style="color:white;" OnClick="@(() => OpenDrawer(Anchor.Top))">Navigate</MudButton> 
+    </MudAppBar>
+    <MudDrawer @bind-Open="@open" Anchor="@anchor" Elevation="1" Variant="@DrawerVariant.Temporary">
+        <MudDrawerHeader>
+            <MudText Typo="Typo.h6">My App</MudText>
+        </MudDrawerHeader>
+        <MudNavMenu>
+            <MudNavLink >Store</MudNavLink>
+            <MudNavLink >Library</MudNavLink>
+            <MudNavLink >Community</MudNavLink>
+        </MudNavMenu>
+    </MudDrawer>
+    <MudMainContent Class="mx-3"> 
+        @Body
+    </MudMainContent>
+</MudLayout>
+
+@code {
+    private MudTheme _theme = new();
+    private bool _isDarkMode = false;
+    bool open;
+    Anchor anchor;
+    
+    void OpenDrawer(Anchor anchor)
+    {
+        open = true;
+        this.anchor = anchor;
+    }
+}
