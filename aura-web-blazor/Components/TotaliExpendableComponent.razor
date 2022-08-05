@@ -1,0 +1,33 @@
+﻿@using Data.Models
+
+<MudExpansionPanels  style="padding-left:0px;padding-right:0px;">
+    <MudExpansionPanel  HideIcon="true">
+
+        <TitleContent>
+            <div class="d-flex align-content-between" style="justify-content: space-between;">
+                <MudText Class="mt-1" Style="font-weight:bold; font-size:20px;">Totali</MudText>
+                <MudText Align="Align.Right" Style="font-weight:bold; font-size:21px;">@Orders.Sum(d => decimal.Parse(d.vlera))€</MudText>
+
+            </div>
+            
+
+        </TitleContent>
+
+
+        <ChildContent >
+            <TabMainComponent/>
+            
+        </ChildContent>
+
+    </MudExpansionPanel>
+</MudExpansionPanels>
+
+@code {
+    private IEnumerable<DetaletEFaturimit>? Orders;
+    protected override async Task OnInitializedAsync()
+    {
+        Orders = await new Data.GetData().GetDetaletAsync();
+    }
+
+    
+}

@@ -1,0 +1,77 @@
+﻿@using Data.Models
+<MudTabs Elevation="0" Style="margin-top:20px;"  Rounded="true" Centered="true" @ref="tabs">
+
+@*    <MudTabPanel Text="Kategorite">
+        
+                    @foreach( KeyValuePair<string, string> category in Data.Categories.Category )
+    {
+                <div class="d-flex align-content-between" style="justify-content: space-between; margin-top:5px;">
+                    <MudButton OnClick="() => Activate(index)" Variant="Variant.Text" Style="text-align:left;">@category.Key</MudButton>
+                    <MudText Class="mt-3" Align="Align.Right"  Style="font-weight:bold; font-size:15px;">@Orders.Where(d=> d.nj2.Equals(@category.Value)).Sum(d => decimal.Parse(d.vlera))€</MudText>
+                </div>
+    }
+    </MudTabPanel>*@
+        <MudTabPanel Text="Grafi">
+            <MudPaper Class="pt-4">
+                <MudChart ChartType="ChartType.Pie" InputData="@GenerateData()" @bind-SelectedIndex="Index1" 
+                            InputLabels="@GenerateLabels()" Width="190px" Height="190px" />
+            </MudPaper>
+    </MudTabPanel>
+
+    @foreach( KeyValuePair<string, string> category in Data.Categories.Category )
+    {
+        <MudTabPanel Text="@category.Key">
+            <SipasProdukteveTableComponent Category="@category.Value"/>
+        </MudTabPanel>
+    }
+
+
+
+</MudTabs>
+
+@code {
+    private IEnumerable<DetaletEFaturimit>? Orders;
+
+    protected override async Task OnInitializedAsync()
+    {
+        Orders = await new Data.GetData().GetDetaletAsync();
+
+
+
+    }
+    private int Index1 = -1;
+
+
+
+    protected string[] GenerateLabels()
+    {
+        string[] labels = new string[10];
+        int index2 = 0;
+        @foreach( KeyValuePair<string, string> category in Data.Categories.Category)
+        {
+            labels[index2++] = category.Key + ":" + Orders.Where(d => d.nj2.Equals(category.Value)).Sum(d => decimal.Parse(d.vlera)).ToString();
+        }
+        index2 = 0;
+        return labels;
+    }
+    protected double[] GenerateData()
+    {
+
+        double[] data = new double[Data.Categories.Category.Count()];
+        int i = 0;
+        @foreach( KeyValuePair<string, string> category in Data.Categories.Category)
+        {
+            data[i++] = Orders.Where(d => d.nj2.Equals(category.Value)).Sum(d => double.Parse(d.vlera));
+        }
+        i = 0;
+        return data;
+    }
+
+
+    MudTabs tabs;
+    //void Activate(int index)
+    //{
+        
+    //    tabs.ActivatePanel(index);
+    //}
+}

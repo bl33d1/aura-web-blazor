@@ -6,16 +6,14 @@
 
 <MudLayout  Style="max-width:600px;" Class="mx-auto mt-5">
     <MudAppBar Elevation="1">
-        <MudButton Variant="Variant.Text" Style="color:white;" OnClick="@(() => OpenDrawer(Anchor.Top))">Navigate</MudButton> 
+        <MudButton Variant="Variant.Text" Style="color:white;" OnClick="@(() => OpenDrawer(Anchor.Top))">aura</MudButton> 
     </MudAppBar>
     <MudDrawer @bind-Open="@open" Anchor="@anchor" Elevation="1" Variant="@DrawerVariant.Temporary">
         <MudDrawerHeader>
-            <MudText Typo="Typo.h6">My App</MudText>
+            <MudText Typo="Typo.h6">aura</MudText>
         </MudDrawerHeader>
         <MudNavMenu>
-            <MudNavLink >Store</MudNavLink>
-            <MudNavLink >Library</MudNavLink>
-            <MudNavLink >Community</MudNavLink>
+            <MudNavLink OnClick="(() => ChangeTheme())">Change Theme</MudNavLink>
         </MudNavMenu>
     </MudDrawer>
     <MudMainContent Class="mx-3"> 
@@ -28,10 +26,16 @@
     private bool _isDarkMode = false;
     bool open;
     Anchor anchor;
-    
+
     void OpenDrawer(Anchor anchor)
     {
         open = true;
         this.anchor = anchor;
+    }
+
+    void ChangeTheme()
+    {
+        _isDarkMode = !_isDarkMode;
+        StateHasChanged();
     }
 }

@@ -5,74 +5,16 @@
 <PageTitle>Pazari Ditor</PageTitle>
 <br />
 
-
-@*
-<MudDataGrid Items="@Orders.Take(4)">
-    <Columns>
-        <Column T="Data.DetaletEFaturimit" Field="kam"/>
-        <Column T="Data.DetaletEFaturimit" Field="vlera" />
-    </Columns>
-</MudDataGrid>*@
-
-
+<TotaliExpendableComponent/>
 
 <br />
 <br />
 
-<MudExpansionPanels>
-    <MudExpansionPanel HideIcon="true">
+<MudText Align="Align.Center" Style="margin-bottom:15px; font-size:16px; font-weight:bold;">Sipas Kamarierit</MudText>
 
-        <TitleContent>
-            <div class="d-flex align-content-between" style="justify-content: space-between;">
-                <MudText Class="mt-1">Totali</MudText>
-                <MudText Align="Align.Right" Style="font-weight:bold">@Orders.Sum(d => decimal.Parse(d.vlera))</MudText>
-            </div>
-        </TitleContent>
-
-
-        <ChildContent>
-        
-        </ChildContent>
-
-
-    </MudExpansionPanel>
-</MudExpansionPanels>
-
-<MudTabs Elevation="3" Rounded="true" Centered="true" >
-            <MudTabPanel Text="Totali">
-                <MudPaper Class="pa-4">
-                    <MudChart ChartType="ChartType.Pie" InputData="@data" @bind-SelectedIndex="Index1" InputLabels="@GenerateLabels()" Width="100px" Height="100px" />
-                </MudPaper>
-            </MudTabPanel>
-            <MudTabPanel Text="Banaku">
-                <SipasKamarieritComponent />
-            </MudTabPanel>
-            <MudTabPanel Text="Kuzhina">
-                <SipasKamarieritComponent Items=@{"Bledi","bledi"}/>
-
-            </MudTabPanel>
-</MudTabs>
-
-<br />
-<br />
-
-@*<SipasKamarieritComponent/>*@
+<SipasKamarieritComponent/>
 
 @code{
-
-    private int Index1 = -1;
-    double[] data = { 77, 25 };
-
-
-    protected string[] GenerateLabels()
-    {
-        string[] labels = { "Kuzhina: " + Orders.Where(d => d.nj2.Equals("K")).Sum(d => decimal.Parse(d.vlera)).ToString(), "Banaku: " +   Orders.Where(d => d.nj2.Equals("B")).Sum(d => decimal.Parse(d.vlera)).ToString() };
-
-        
-
-        return labels;
-    }
-
 
     private IEnumerable<DetaletEFaturimit> Orders;
 

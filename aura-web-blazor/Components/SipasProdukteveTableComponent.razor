@@ -1,0 +1,67 @@
+﻿@using Data.Models
+<MudSimpleTable  Style="overflow-x: auto;" >
+
+    <tbody>
+        @foreach (var order in Orders.Where(d=> d.nj2.Equals(Category)).Take(0))
+        {
+            <tr>
+                <td>@order.artikulli</td>
+                <td style="font-weight:bolder; text-align:right;">@ReturnSasiaPerProdukt(order.artikulli)</td>
+            </tr>
+        }
+        <tr>
+            <td>Numri porosive:</td>
+            <td style="font-weight:bolder; text-align:right;">@Orders.Where(d=>d.nj2.Equals(Category)).Count().ToString()</td>
+        </tr>
+        <tr>
+            <td>Totali ditor:</td>
+            <td style="font-weight:bolder; font-size:17.5px;text-align:right;">@Orders.Where(d=>d.nj2.Equals(Category)).Sum(d=> decimal.Parse(d.vlera)).ToString()€</td>
+        </tr>
+        <tr>
+            <td>Rush hour:</td>
+            <td style="font-weight:bolder; text-align:right;">13:00</td>
+        </tr>
+        <tr>
+            <td>Paradite (deri 15:00):☀️</td>
+            <td style="font-weight:bolder; text-align:right;">@ReturnParadite("para")€</td>
+        </tr>
+        <tr>
+            <td>Pasdite (pas 15:00):🌙</td>
+            <td style="font-weight:bolder; text-align:right;">@ReturnParadite("pas")€</td>
+        </tr>
+    </tbody>
+</MudSimpleTable>
+
+@code {
+
+
+    [Parameter]
+    public string? Category { get; set; }
+
+    private IEnumerable<DetaletEFaturimit>? Orders;
+
+    protected override async Task OnInitializedAsync()
+    {
+        Orders = await new Data.GetData().GetDetaletAsync();
+    }
+
+    protected string ReturnSasiaPerProdukt(string artikulli)
+    {
+        return Orders.Where(d => d.artikulli.Equals(artikulli)).Sum(d => decimal.Parse(d.sasia)).ToString();;
+    }
+    
+    protected string ReturnParadite(string paraPas)
+    {
+        if(paraPas.Equals("para")) return Orders.Where(d => DateTime.Parse(d.ora).Hour < 15).Where(d => d.nj2.Equals(Category)).Sum(d => decimal.Parse(d.vlera)).ToString();
+        else return Orders.Where(d => DateTime.Parse(d.ora).Hour > 15).Where(d => d.nj2.Equals(Category)).Sum(d => decimal.Parse(d.vlera)).ToString();
+       
+    }
+
+
+    //protected string ReturnRushHour()
+    //{
+       
+    //    return Orders.GroupBy(d => DateTime.Parse(d.ora).Hour).Max(d=>d.First()).ToString();
+    //}
+
+}

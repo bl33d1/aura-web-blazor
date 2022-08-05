@@ -2,22 +2,17 @@
 <MudSimpleTable  Style="overflow-x: auto;" >
 
     <tbody>
-        @foreach (var order in Orders.Take(5))
+        @foreach (var order in Orders.Take(6))
         {
             <tr>
                 <td>@order.kam</td>
-                <td style="font-weight:bolder; text-align:right;">@order.vlera.ToString()</td>
+                <td style="font-weight:bolder; text-align:right;">@order.vlera.ToString()€</td>
             </tr>
         }
     </tbody>
 </MudSimpleTable>
 
 @code {
-    
-    [Parameter]
-    protected string[] Items;
-    
-    
 
     private IEnumerable<DetaletEFaturimit> Orders;
 
