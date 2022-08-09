@@ -1,8 +1,31 @@
 ﻿@using Data.Models
 @inject NavigationManager UriHelper
 <MudText Align="Align.Center" Style="margin-bottom:15px;margin-top:30px; font-size:16px; font-weight:bold;">Faturat e fundit</MudText>
-<MudSimpleTable Elevation="3"  Class="table table-striped table-dark" >
+@*<MudTable Items="@Elements" FixedHeader="@fixed_header" FixedFooter="@fixed_footer">
 
+    <HeaderContent>
+        <MudTh>Produkti</MudTh>
+        <MudTh>Sasia</MudTh>
+        <MudTh>Vlera</MudTh>
+        <MudTh>Tav</MudTh>
+        <MudTh>Kam</MudTh>
+    </HeaderContent>
+    @foreach (var x in GetFaturat(@TakeAll)){
+    <RowTemplate>
+        <MudTd DataLabel="Nr">@x.artikulli</MudTd>
+        <MudTd DataLabel="Sign">@x.artikulli</MudTd>
+        <MudTd DataLabel="Name">@x.artikulli</MudTd>
+        <MudTd DataLabel="Position">@x.artikulli</MudTd>
+        <MudTd DataLabel="Molar mass">@x.artikulli</MudTd>
+    </RowTemplate>
+    }
+    <FooterContent>
+        <MudButton @onclick=Navigate>@(TakeAll ? "Kthehu" : "Shiko te gjitha")></MudButton>
+    </FooterContent>
+</MudTable>
+*@
+
+<MudSimpleTable Elevation="3"  Class="table table-striped table-dark" >
     <thead class="table-header">
         <tr>
             <td style="font-weight: bolder; font-size: small;" class="table-header-left table-header-font">Produkti</td>
@@ -14,7 +37,7 @@
     </thead>
     @foreach (var x in GetFaturat(@TakeAll)){
     <tr style="font-size: small; padding-bottom:10px;">
-        <td style="font-size: 20px;">@x.artikulli</td>
+        <td style="font-size: 12px;">@x.artikulli</td>
         <td style="font-size: 12px; text-align:center;">@x.sasia</td>
         <td style="font-size: 12px; text-align:center;">@string.Format("{0:F1}",x.vlera)€</td>
         <td class="text-center" style="font-size: 10px; text-align:center;">@x.tav
@@ -29,9 +52,11 @@
             <td class="table-footer-bot table-header-font" colspan="5" style="text-align: center"><a class="tdBtn" @onclick=Navigate>@(TakeAll ? "Kthehu" : "Shiko te gjitha")</a></td>
         </tr>
     </tfoot>
-    </MudSimpleTable>
+</MudSimpleTable>
 
 @code {
+    bool fixed_header = true;
+    bool fixed_footer = true;
     private IEnumerable<DetaletEFaturimit>? Orders;
 
     [Parameter]
