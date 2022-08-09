@@ -1,0 +1,23 @@
+﻿@inject NavigationManager UriHelper
+
+
+<MudCard Elevation="3" >
+    @*<a onclick=@NavigateTo>*@
+        <MudCardContent>
+                <MudText Style="text-align:center;">@NumriTavolines</MudText>
+        </MudCardContent>
+    @*</a>*@
+</MudCard>
+
+
+@code {
+
+
+    [Parameter]
+    public string NumriTavolines { get; set; }
+    
+    protected void NavigateTo()
+    {
+        UriHelper.NavigateTo("/");
+    }
+}

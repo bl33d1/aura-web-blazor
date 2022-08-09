@@ -5,21 +5,30 @@
 <PageTitle>Pazari Ditor</PageTitle>
 <br />
 
-<TotaliExpendableComponent/>
+<ExpendableTotaliComponent/>
 
 <br />
 <br />
 
 
-@*<SipasKamarieritComponent/>*@
+<SipasKamarieritComponent/>
 
 
+<br />
+<br />
+<MudGrid>
+    <MudItem xs="6">
+        <MenuButtonsComponent Icon="@Icons.Filled.TableBar" Text="Tavolinat" Link="/tavolinat"></MenuButtonsComponent>
+    </MudItem>
+    <MudItem xs="6">
+        <MenuButtonsComponent Icon="@Icons.Filled.Workspaces" Text="Produktet" Link="/"></MenuButtonsComponent>
+    </MudItem>
+</MudGrid>
+<br />
 
-
-
-@*<FaturatLatestComponent TakeAll=@false></FaturatLatestComponent>*@
-
-<MenuButtonsComponent></MenuButtonsComponent>
+<TablePorositMainComponent TakeAll=@false></TablePorositMainComponent>
+<br>
+@*<GridTavolinatComponent></GridTavolinatComponent>*@
 
 @code{
 

@@ -3,7 +3,7 @@
 
 @*    <MudTabPanel Text="Kategorite">
         
-                    @foreach( KeyValuePair<string, string> category in Data.Categories.Category )
+    @foreach( KeyValuePair<string, string> category in Data.Categories.Category )
     {
                 <div class="d-flex align-content-between" style="justify-content: space-between; margin-top:5px;">
                     <MudButton OnClick="() => Activate(index)" Variant="Variant.Text" Style="text-align:left;">@category.Key</MudButton>
@@ -14,13 +14,13 @@
         
 
     <MudTabPanel Text="Totali">
-        <TotaliTableComponent />
+        <TableTotaliComponent />
     </MudTabPanel>
 
     @foreach( KeyValuePair<string, string> category in Data.Categories.Category )
     {
         <MudTabPanel Text="@category.Key">
-            <SipasProdukteveTableComponent Category="@category.Value"/>
+            <TableDetailsMainComponent Category="@category.Value"/>
         </MudTabPanel>
     }
     <MudTabPanel Text="Grafi">

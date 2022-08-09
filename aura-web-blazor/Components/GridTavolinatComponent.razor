@@ -1,0 +1,40 @@
+﻿@using Data.Models
+
+<MudGrid>
+    @foreach(var d in GetTavolinatAktive())
+    {
+        <MudItem xs="3">
+            <NumriTavolinesComponent NumriTavolines="@d.Tavolina" ></NumriTavolinesComponent>
+        </MudItem>
+    }
+</MudGrid>
+
+@code {
+    private IEnumerable<DetaletEFaturimit>? Orders;
+
+    protected override async Task OnInitializedAsync()
+    {
+        Orders = await new Data.GetData().GetDetaletAsync();
+    }
+
+
+    protected List<Tavolinat> GetTavolinatAktive()
+    {
+       return (from d in Orders
+                        group d by new
+                        {
+                            d.tav
+                        } into grp
+                        select new Tavolinat
+                        {
+                            Tavolina = grp.Key.tav,
+                            isActive = grp.GroupBy(p=> p.eshteMbyllur).Count() == 1 ? false : true,
+                        }).OrderBy(d=>d.Tavolina).ToList();
+    }
+
+    public partial class Tavolinat
+    {
+        public string? Tavolina { get; set; }
+        public bool isActive { get; set; }
+    }
+}

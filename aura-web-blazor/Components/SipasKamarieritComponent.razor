@@ -1,13 +1,13 @@
 ﻿@using Data.Models
 <MudText Align="Align.Center" Style="margin-bottom:15px; font-size:16px; font-weight:bold;">Sipas Kamarierit</MudText>
-<MudSimpleTable  Style="overflow-x: auto;" >
+<MudSimpleTable Elevation="3" Style="overflow-x: auto;" >
 
     <tbody>
         @foreach (var kamarieri in GetSipasKamarieritTotal())
         {
             <tr>
-                <td>@kamarieri.Kamarieri</td>
-                <td style="font-weight:bolder; text-align:right;">@kamarieri.Vlera.ToString()€</td>
+                <td style="font-weight:bold; ">@kamarieri.Kamarieri</td>
+                <td style="font-weight:bolder; text-align:right;">@kamarieri.Vlera.ToString(".00")€</td>
             </tr>
         }
     </tbody>

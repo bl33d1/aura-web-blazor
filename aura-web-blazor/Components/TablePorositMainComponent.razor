@@ -1,7 +1,7 @@
 ﻿@using Data.Models
 @inject NavigationManager UriHelper
 <MudText Align="Align.Center" Style="margin-bottom:15px;margin-top:30px; font-size:16px; font-weight:bold;">Faturat e fundit</MudText>
-<MudSimpleTable Elevation="2"  Class="table table-striped table-dark" >
+<MudSimpleTable Elevation="3"  Class="table table-striped table-dark" >
 
     <thead class="table-header">
         <tr>
@@ -14,7 +14,7 @@
     </thead>
     @foreach (var x in GetFaturat(@TakeAll)){
     <tr style="font-size: small; padding-bottom:10px;">
-        <td style="font-size: 11px;">@x.artikulli</td>
+        <td style="font-size: 20px;">@x.artikulli</td>
         <td style="font-size: 12px; text-align:center;">@x.sasia</td>
         <td style="font-size: 12px; text-align:center;">@string.Format("{0:F1}",x.vlera)€</td>
         <td class="text-center" style="font-size: 10px; text-align:center;">@x.tav

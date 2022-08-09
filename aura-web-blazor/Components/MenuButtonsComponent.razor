@@ -1,26 +1,16 @@
 ﻿@using Data.Models
-<MudGrid>
-    <MudItem xs="6">
-        <MudCard>
-            <MudCardContent>
-                <MudText>Tavolinat</MudText>
-            </MudCardContent>
-            <MudCardActions>
-                @*<MudButton Variant="Variant.Text" Color="Color.Primary">Learn More</MudButton>*@
-            </MudCardActions>
-        </MudCard>
-    </MudItem>
-    <MudItem xs="6">
-        <MudCard>
-            <MudCardContent>
-                <MudText>Tavolinat</MudText>
-            </MudCardContent>
-            <MudCardActions>
-                @*<MudButton Variant="Variant.Text" Color="Color.Primary">Learn More</MudButton>*@
-            </MudCardActions>
-        </MudCard>
-    </MudItem>
-</MudGrid>
+@inject NavigationManager UriHelper
+<MudCard Elevation="3">
+    <a onclick=@NavigateTo>
+                
+        <MudCardContent>
+            <div class="d-flex">
+                <MudIcon Icon="@Icon"></MudIcon>
+                <MudText>@Text</MudText>
+            </div>
+        </MudCardContent>
+    </a>
+</MudCard>
 
 @code {
     //private IEnumerable<DetaletEFaturimit>? Orders;
@@ -29,4 +19,15 @@
     //{
     //    Orders = await new Data.GetData().GetDetaletAsync();
     //}
+    [Parameter]
+    public string Icon { get; set; }
+    [Parameter]
+    public string Text { get; set; }
+    [Parameter]
+    public string Link { get; set; }
+
+    protected void NavigateTo()
+    {
+        UriHelper.NavigateTo(this.Link);
+    }
 }
