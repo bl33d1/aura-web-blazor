@@ -1,0 +1,60 @@
+﻿@using Data.Models
+@inject NavigationManager UriHelper
+<MudText Align="Align.Center" Style="margin-bottom:15px;margin-top:30px; font-size:16px; font-weight:bold;">Faturat e fundit</MudText>
+<MudSimpleTable Elevation="2"  Class="table table-striped table-dark" >
+
+    <thead class="table-header">
+        <tr>
+            <td style="font-weight: bolder; font-size: small;" class="table-header-left table-header-font">Produkti</td>
+            <td style="font-weight: bolder; font-size: small;" class="table-header-font">Sasia</td>
+            <td style="font-weight: bolder; font-size: small;" class="table-header-font">Vlera</td>
+            <td style="font-weight: bolder; font-size: small;" class="text-center table-header-font">Tav</td>
+            <td style="font-weight: bolder; font-size: small;" class="table-header-right ">Kam</td>
+        </tr>
+    </thead>
+    @foreach (var x in GetFaturat(@TakeAll)){
+    <tr style="font-size: small; padding-bottom:10px;">
+        <td style="font-size: 11px;">@x.artikulli</td>
+        <td style="font-size: 12px; text-align:center;">@x.sasia</td>
+        <td style="font-size: 12px; text-align:center;">@string.Format("{0:F1}",x.vlera)€</td>
+        <td class="text-center" style="font-size: 10px; text-align:center;">@x.tav
+            <br />
+            @DateTime.Parse(x.ora).ToString("HH:mm:ss")</td>
+        <td style="font-size: 11px" class="align-center;">@x.kam</td>
+    </tr>
+    }
+
+     <tfoot>
+        <tr>
+            <td class="table-footer-bot table-header-font" colspan="5" style="text-align: center"><a class="tdBtn" @onclick=Navigate>@(TakeAll ? "Kthehu" : "Shiko te gjitha")</a></td>
+        </tr>
+    </tfoot>
+    </MudSimpleTable>
+
+@code {
+    private IEnumerable<DetaletEFaturimit>? Orders;
+
+    [Parameter]
+    public bool TakeAll { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        Orders = await new Data.GetData().GetDetaletAsync();
+    }
+    void Navigate()
+    {
+        if(!TakeAll)
+        UriHelper.NavigateTo("faturat");
+        else
+        UriHelper.NavigateTo("/");
+
+    }
+
+    protected IEnumerable<DetaletEFaturimit> GetFaturat(bool TakeAll)
+    {
+        if (TakeAll)
+            return Orders.OrderByDescending(d => DateTime.Parse(d.ora));
+        else
+            return Orders.OrderByDescending(d => DateTime.Parse(d.ora)).Take(15);
+    }
+}

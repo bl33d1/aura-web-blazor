@@ -11,11 +11,10 @@
                 </div>
     }
     </MudTabPanel>*@
-        <MudTabPanel Text="Grafi">
-            <MudPaper Class="pt-4">
-                <MudChart ChartType="ChartType.Pie" InputData="@GenerateData()" @bind-SelectedIndex="Index1" 
-                            InputLabels="@GenerateLabels()" Width="190px" Height="190px" />
-            </MudPaper>
+        
+
+    <MudTabPanel Text="Totali">
+        <TotaliTableComponent />
     </MudTabPanel>
 
     @foreach( KeyValuePair<string, string> category in Data.Categories.Category )
@@ -24,7 +23,12 @@
             <SipasProdukteveTableComponent Category="@category.Value"/>
         </MudTabPanel>
     }
-
+    <MudTabPanel Text="Grafi">
+            <MudPaper Class="pt-4">
+                <MudChart ChartType="ChartType.Pie" InputData="@GenerateData()" @bind-SelectedIndex="Index1" 
+                            InputLabels="@GenerateLabels()" Width="190px" Height="190px" />
+            </MudPaper>
+    </MudTabPanel>
 
 
 </MudTabs>
@@ -49,7 +53,7 @@
         int index2 = 0;
         @foreach( KeyValuePair<string, string> category in Data.Categories.Category)
         {
-            labels[index2++] = category.Key + ":" + Orders.Where(d => d.nj2.Equals(category.Value)).Sum(d => decimal.Parse(d.vlera)).ToString();
+            labels[index2++] = category.Key + ": " + Orders.Where(d => d.nj2.Equals(category.Value)).Sum(d => decimal.Parse(d.vlera)).ToString();
         }
         index2 = 0;
         return labels;

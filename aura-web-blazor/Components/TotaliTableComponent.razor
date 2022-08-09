@@ -1,21 +1,15 @@
 ﻿@using Data.Models
-<MudSimpleTable  Style="overflow-x: auto;" >
+<MudSimpleTable  Style="overflow-x: auto; " >
 
     <tbody>
-        @foreach (var order in Orders.Where(d=> d.nj2.Equals(Category)).Take(0))
-        {
-            <tr>
-                <td>@order.artikulli</td>
-                <td style="font-weight:bolder; text-align:right;">@ReturnSasiaPerProdukt(order.artikulli)</td>
-            </tr>
-        }
+
         <tr>
             <td>Numri porosive:</td>
-            <td style="font-weight:bolder; text-align:right;">@Orders.Where(d=>d.nj2.Equals(Category)).Count().ToString()</td>
+            <td style="font-weight:bolder; text-align:right;">@Orders.Count().ToString()</td>
         </tr>
         <tr>
             <td>Totali ditor:</td>
-            <td style="font-weight:bolder; font-size:17.5px;text-align:right;">@Orders.Where(d=>d.nj2.Equals(Category)).Sum(d=> decimal.Parse(d.vlera)).ToString()€</td>
+            <td style="font-weight:bolder; font-size:17.5px;text-align:right;">@Orders.Sum(d=> decimal.Parse(d.vlera)).ToString()€</td>
         </tr>
         <tr>
             <td>Rush hour:</td>
@@ -34,10 +28,6 @@
 
 @code {
 
-
-    [Parameter]
-    public string? Category { get; set; }
-
     private IEnumerable<DetaletEFaturimit>? Orders;
 
     protected override async Task OnInitializedAsync()
@@ -52,8 +42,8 @@
 
     protected string ReturnParadite(string paraPas)
     {
-        if(paraPas.Equals("para")) return Orders.Where(d => DateTime.Parse(d.ora).Hour < 15).Where(d => d.nj2.Equals(Category)).Sum(d => decimal.Parse(d.vlera)).ToString();
-        else return Orders.Where(d => DateTime.Parse(d.ora).Hour > 15).Where(d => d.nj2.Equals(Category)).Sum(d => decimal.Parse(d.vlera)).ToString();
+        if(paraPas.Equals("para")) return Orders.Where(d => DateTime.Parse(d.ora).Hour < 15).Sum(d => decimal.Parse(d.vlera)).ToString();
+        else return Orders.Where(d => DateTime.Parse(d.ora).Hour > 15).Sum(d => decimal.Parse(d.vlera)).ToString();
 
     }
 

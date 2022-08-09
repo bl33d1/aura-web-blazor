@@ -5,15 +5,22 @@
 <MudThemeProvider @bind-IsDarkMode="@_isDarkMode" Theme="_theme"/>
 
 <MudLayout  Style="max-width:600px;" Class="mx-auto mt-5">
-    <MudAppBar Elevation="1">
-        <MudButton Variant="Variant.Text" Style="color:white;" OnClick="@(() => OpenDrawer(Anchor.Top))">aura</MudButton> 
+    <MudAppBar Elevation="1" Dense="true" >
+        
+             <MudButton Style="color:white;" OnClick="@(() => OpenDrawer(Anchor.Top))"><MudIcon Icon="@Icons.Material.Filled.Menu" OnClick="@(() => OpenDrawer(Anchor.Top))" Title="Favorite" /></MudButton> 
+           <MudSpacer />
+                 <MudText Style="text-align:center; margin-left:-50px;">Aura</MudText>
+           <MudSpacer />
+        
+
     </MudAppBar>
+            
     <MudDrawer @bind-Open="@open" Anchor="@anchor" Elevation="1" Variant="@DrawerVariant.Temporary">
         <MudDrawerHeader>
             <MudText Typo="Typo.h6">aura</MudText>
         </MudDrawerHeader>
         <MudNavMenu>
-            <MudNavLink OnClick="(() => ChangeTheme())">Change Theme</MudNavLink>
+            <MudNavLink OnClick="(() => ChangeTheme())">Ndrysho ne @(_isDarkMode ? "Light Mode" : "Dark Mode")</MudNavLink>
         </MudNavMenu>
     </MudDrawer>
     <MudMainContent Class="mx-3"> 

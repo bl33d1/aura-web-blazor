@@ -10,13 +10,20 @@
 <br />
 <br />
 
-<MudText Align="Align.Center" Style="margin-bottom:15px; font-size:16px; font-weight:bold;">Sipas Kamarierit</MudText>
 
-<SipasKamarieritComponent/>
+@*<SipasKamarieritComponent/>*@
+
+
+
+
+
+@*<FaturatLatestComponent TakeAll=@false></FaturatLatestComponent>*@
+
+<MenuButtonsComponent></MenuButtonsComponent>
 
 @code{
 
-    private IEnumerable<DetaletEFaturimit> Orders;
+    private IEnumerable<DetaletEFaturimit>? Orders;
 
     protected override async Task OnInitializedAsync()
     {

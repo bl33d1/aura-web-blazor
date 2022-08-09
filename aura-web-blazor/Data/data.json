@@ -165,7 +165,7 @@
     "sasia": "1",
     "qmimi": "0.5",
     "vlera": "0.5",
-    "nj2": "B",
+    "nj2": "S",
     "password": "0003954673",
     "kam": "Bekimi",
     "ora": " 15:10:19",
@@ -197,7 +197,7 @@
     "sasia": "1",
     "qmimi": "1.2",
     "vlera": "1.2",
-    "nj2": "B",
+    "nj2": "S",
     "password": "0003954673",
     "kam": "Bekimi",
     "ora": " 15:16:44",
@@ -3585,7 +3585,7 @@
   },
   {
 
-    "artikulli": "MILKSHAKE ICE COFFE",
+    "artikulli": "MILKSHAKE ICE COFFEMILKSHAKE ICE COFFEMILKSHAKE ICE COFFE",
     "sasia": "1",
     "qmimi": "1.5",
     "vlera": "1.5",

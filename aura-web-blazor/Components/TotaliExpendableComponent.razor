@@ -1,33 +1,40 @@
 ﻿@using Data.Models
 
-<MudExpansionPanels  style="padding-left:0px;padding-right:0px;">
-    <MudExpansionPanel  HideIcon="true">
+<style>
+    .mud-expand-panel-content {
+        padding: 0 5px 16px !important;
+    }
+</style>
+<MudExpansionPanels Style="padding:0px">
+    <MudExpansionPanel @bind-IsExpanded="isOpen" HideIcon="true">
 
         <TitleContent>
             <div class="d-flex align-content-between" style="justify-content: space-between;">
                 <MudText Class="mt-1" Style="font-weight:bold; font-size:20px;">Totali</MudText>
                 <MudText Align="Align.Right" Style="font-weight:bold; font-size:21px;">@Orders.Sum(d => decimal.Parse(d.vlera))€</MudText>
-
             </div>
-            
+            <div class="d-flex align-content-center" style="justify-content: center;">
 
+                <MudIcon Icon="@(isOpen ? @Icons.Filled.ExpandLess : @Icons.Filled.ExpandMore)" Style="max-width:70px;" Title="Zgjero"></MudIcon>
+            </div>
         </TitleContent>
 
 
-        <ChildContent >
-            <TabMainComponent/>
-            
+        <ChildContent>
+            <TabMainComponent />
         </ChildContent>
 
     </MudExpansionPanel>
 </MudExpansionPanels>
 
 @code {
+    bool isOpen;
     private IEnumerable<DetaletEFaturimit>? Orders;
     protected override async Task OnInitializedAsync()
     {
         Orders = await new Data.GetData().GetDetaletAsync();
+
     }
 
-    
+
 }

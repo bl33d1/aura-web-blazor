@@ -1,12 +1,13 @@
 ﻿@using Data.Models
+<MudText Align="Align.Center" Style="margin-bottom:15px; font-size:16px; font-weight:bold;">Sipas Kamarierit</MudText>
 <MudSimpleTable  Style="overflow-x: auto;" >
 
     <tbody>
-        @foreach (var order in Orders.Take(6))
+        @foreach (var kamarieri in GetSipasKamarieritTotal())
         {
             <tr>
-                <td>@order.kam</td>
-                <td style="font-weight:bolder; text-align:right;">@order.vlera.ToString()€</td>
+                <td>@kamarieri.Kamarieri</td>
+                <td style="font-weight:bolder; text-align:right;">@kamarieri.Vlera.ToString()€</td>
             </tr>
         }
     </tbody>
@@ -19,5 +20,26 @@
     protected override async Task OnInitializedAsync()
     {
         Orders = await new Data.GetData().GetDetaletAsync();
+    }
+
+    public IEnumerable<KamDheVlerat> GetSipasKamarieritTotal()
+    {
+        IEnumerable<KamDheVlerat> kamarierat = from d in Orders
+                                        group d by new
+                                        {
+                                            d.kam
+                                        } into grp
+                                        select new KamDheVlerat()
+                                                {
+                                                    Kamarieri = grp.Key.kam,
+                                                    Vlera = grp.Sum(s => decimal.Parse(s.vlera))
+                                                };
+        return kamarierat.OrderByDescending(p => p.Vlera).ToList();
+    }
+
+    public partial class KamDheVlerat
+    {
+        public string Kamarieri { get; set; }
+        public decimal Vlera { get; set; }
     }
 }
