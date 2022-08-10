@@ -1,0 +1,49 @@
+﻿@using Data.Models
+
+<MudSimpleTable Elevation="0"  Style="overflow-x: auto;" >
+
+    <tbody>
+        <tr>
+            <td>Numri porosive:</td>
+            <td style="font-weight:bolder; text-align:right;">@Orders.Where(d=>d.kam.Equals(Kamarieri)).Count().ToString()</td>
+        </tr>
+        <tr>
+            <td>Porosia e pare:</td>
+            <td style="font-weight:bolder; text-align:right;">@ReturnPorosiaPareFundit("pare")€</td>
+        </tr>
+        <tr>
+            <td>Porosia e fundit:</td>
+            <td style="font-weight:bolder; text-align:right;">@ReturnPorosiaPareFundit("fundit")€</td>
+        </tr>
+        <tr>
+            <td colspan="2"><MudButton FullWidth="@true" Color="Color.Primary" Variant="Variant.Filled">Shiko te gjithe porosite</MudButton></td>
+        </tr>
+
+    </tbody>
+</MudSimpleTable>
+
+
+@code {
+
+
+    [Parameter]
+    public string? Kamarieri { get; set; }
+
+    private IEnumerable<DetaletEFaturimit>? Orders;
+
+    protected override async Task OnInitializedAsync()
+    {
+        Orders = await new Data.GetData().GetDetaletAsync();
+    }
+
+    protected string ReturnSasiaPerProdukt(string artikulli)
+    {
+        return Orders.Where(d => d.artikulli.Equals(artikulli)).Sum(d => decimal.Parse(d.sasia)).ToString();;
+    }
+
+    protected string ReturnPorosiaPareFundit(string pareFundit)
+    {
+
+        return pareFundit.Equals("fundit") ? Orders.Where(d => d.kam.Equals(Kamarieri)).Max(d => d.ora).ToString() : Orders.Where(d => d.kam.Equals(Kamarieri)).Min(d => d.ora).ToString() ;
+    }
+}

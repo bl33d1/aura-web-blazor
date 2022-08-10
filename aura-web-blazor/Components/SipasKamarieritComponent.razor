@@ -1,6 +1,6 @@
 ﻿@using Data.Models
 <MudText Align="Align.Center" Style="margin-bottom:15px; font-size:16px; font-weight:bold;">Sipas Kamarierit</MudText>
-<MudSimpleTable Elevation="3" Style="overflow-x: auto;" >
+@*<MudSimpleTable Elevation="3" Style="overflow-x: auto;" >
 
     <tbody>
         @foreach (var kamarieri in GetSipasKamarieritTotal())
@@ -11,7 +11,27 @@
             </tr>
         }
     </tbody>
-</MudSimpleTable>
+</MudSimpleTable>*@
+<MudExpansionPanels Elevation="4" Style="overflow-x: auto;" Dense=true MultiExpansion=true>
+
+    
+        @foreach (var kamarieri in GetSipasKamarieritTotal())
+        {
+           <MudExpansionPanel>
+               <TitleContent>
+                   <div class="d-flex">
+                       <MudText Style="font-size:14px; font-weight:bold">@kamarieri.Kamarieri</MudText> 
+                       <MudSpacer></MudSpacer>
+                       <MudText Style="font-size:14px; font-weight:bold">@kamarieri.Vlera.ToString(".00")€</MudText>
+                   </div>
+               </TitleContent>
+               <ChildContent>
+                   <SimpleTableKamarieriDetailsComponent Kamarieri="@kamarieri.Kamarieri"></SimpleTableKamarieriDetailsComponent>
+               </ChildContent>
+           </MudExpansionPanel>
+           
+        }
+</MudExpansionPanels>
 
 @code {
 
