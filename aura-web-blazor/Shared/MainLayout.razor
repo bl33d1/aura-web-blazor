@@ -2,7 +2,7 @@
 
 <PageTitle>aura-web-blazor</PageTitle>
 
-<MudThemeProvider @bind-IsDarkMode="@_isDarkMode" Theme="_theme"/>
+<MudThemeProvider @bind-IsDarkMode="@_isDarkMode" Theme="MyCustomTheme"/>
 
 <MudLayout  Style="max-width:600px;" Class="mx-auto mt-5">
     <MudAppBar Elevation="1" Dense="true" >
@@ -45,4 +45,16 @@
         _isDarkMode = !_isDarkMode;
         StateHasChanged();
     }
+
+
+
+    MudTheme MyCustomTheme = new MudTheme()
+    {
+        Palette = new Palette()
+        {
+            Primary = Colors.Blue.Default,
+            Secondary = Colors.Green.Accent4,
+            AppbarBackground = Colors.Blue.Default,
+        }
+    };
 }
