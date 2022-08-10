@@ -1,31 +1,28 @@
 ﻿@using Data.Models
 @inject NavigationManager UriHelper
 <MudText Align="Align.Center" Style="margin-bottom:15px;margin-top:30px; font-size:16px; font-weight:bold;">Faturat e fundit</MudText>
-@*<MudTable Items="@Elements" FixedHeader="@fixed_header" FixedFooter="@fixed_footer">
 
+<MudTable Striped=true Dense=true Style="font-size:small" Items="@GetFaturat(@TakeAll)" Breakpoint="Breakpoint.None" FixedHeader=true FixedFooter=true>
     <HeaderContent>
         <MudTh>Produkti</MudTh>
         <MudTh>Sasia</MudTh>
         <MudTh>Vlera</MudTh>
-        <MudTh>Tav</MudTh>
-        <MudTh>Kam</MudTh>
+        <MudTh>Tavolina</MudTh>
+        <MudTh>Kamarieri</MudTh>
     </HeaderContent>
-    @foreach (var x in GetFaturat(@TakeAll)){
     <RowTemplate>
-        <MudTd DataLabel="Nr">@x.artikulli</MudTd>
-        <MudTd DataLabel="Sign">@x.artikulli</MudTd>
-        <MudTd DataLabel="Name">@x.artikulli</MudTd>
-        <MudTd DataLabel="Position">@x.artikulli</MudTd>
-        <MudTd DataLabel="Molar mass">@x.artikulli</MudTd>
+        <MudTd >@context.artikulli</MudTd>
+        <MudTd >@context.sasia</MudTd>
+        <MudTd >@decimal.Parse(context.vlera).ToString("0.00")</MudTd>
+        <MudTd >@context.tav <br /> @DateTime.Parse(context.ora).ToString("HH:mm:ss")</MudTd>
+        <MudTd >@context.kam</MudTd>
     </RowTemplate>
-    }
     <FooterContent>
-        <MudButton @onclick=Navigate>@(TakeAll ? "Kthehu" : "Shiko te gjitha")></MudButton>
     </FooterContent>
 </MudTable>
-*@
 
-<MudSimpleTable Elevation="3"  Class="table table-striped table-dark" >
+
+@*<MudSimpleTable Striped=true Hover=true >
     <thead class="table-header">
         <tr>
             <td style="font-weight: bolder; font-size: small;" class="table-header-left table-header-font">Produkti</td>
@@ -35,15 +32,15 @@
             <td style="font-weight: bolder; font-size: small;" class="table-header-right ">Kam</td>
         </tr>
     </thead>
-    @foreach (var x in GetFaturat(@TakeAll)){
+   @foreach (var x in GetFaturat(@TakeAll)){
     <tr style="font-size: small; padding-bottom:10px;">
-        <td style="font-size: 12px;">@x.artikulli</td>
+        <td style="font-size: 12px;padding-left:6px;">@x.artikulli</td>
         <td style="font-size: 12px; text-align:center;">@x.sasia</td>
-        <td style="font-size: 12px; text-align:center;">@string.Format("{0:F1}",x.vlera)€</td>
-        <td class="text-center" style="font-size: 10px; text-align:center;">@x.tav
+        <td style="font-size: 12px; text-align:center;">@decimal.Parse(x.vlera).ToString("0.00")</td>
+        <td class="text-center" style="font-size: 10px; text-align:center; padding-top:5px;">@x.tav
             <br />
             @DateTime.Parse(x.ora).ToString("HH:mm:ss")</td>
-        <td style="font-size: 11px" class="align-center;">@x.kam</td>
+        <td style="font-size: 11px;text-align:right; padding-right:6px;">@x.kam</td>
     </tr>
     }
 
@@ -52,11 +49,12 @@
             <td class="table-footer-bot table-header-font" colspan="5" style="text-align: center"><a class="tdBtn" @onclick=Navigate>@(TakeAll ? "Kthehu" : "Shiko te gjitha")</a></td>
         </tr>
     </tfoot>
-</MudSimpleTable>
+</MudSimpleTable>*@
 
 @code {
     bool fixed_header = true;
     bool fixed_footer = true;
+
     private IEnumerable<DetaletEFaturimit>? Orders;
 
     [Parameter]
