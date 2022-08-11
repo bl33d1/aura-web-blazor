@@ -1,26 +1,17 @@
 ﻿@using Data.Models
-<MudText Align="Align.Center" Style="margin-bottom:15px; font-size:16px; font-weight:bold;">Sipas Kamarierit</MudText>
-@*<MudSimpleTable Elevation="3" Style="overflow-x: auto;" >
+<MudText  Align="Align.Center" Style="margin-bottom:15px; font-size:16px; font-weight:bold;">Sipas Kamarierit</MudText>
 
-    <tbody>
-        @foreach (var kamarieri in GetSipasKamarieritTotal())
-        {
-            <tr>
-                <td style="font-weight:bold; ">@kamarieri.Kamarieri</td>
-                <td style="font-weight:bolder; text-align:right;">@kamarieri.Vlera.ToString(".00")€</td>
-            </tr>
-        }
-    </tbody>
-</MudSimpleTable>*@
-<MudExpansionPanels Elevation="4" Style="overflow-x: auto;" Dense=true >
+<MudExpansionPanels Elevation="5" Style="overflow-x: auto;" Dense=true >
 
     
         @foreach (var kamarieri in GetSipasKamarieritTotal())
         {
-           <MudExpansionPanel>
+           <MudExpansionPanel IsExpandedChanged="ExpandedChanged" >
                <TitleContent>
                    <div class="d-flex">
-                       <MudText Style="font-size:14px; font-weight:bold">@kamarieri.Kamarieri</MudText> 
+                       @*Change value of Kam when clicked*@
+                       @*<MudText Style="@(isExpanded1?"font-size:18px":"font-size:14px")">@kamarieri.Kamarieri</MudText> *@
+                       <MudText Style="font-size:14px">@kamarieri.Kamarieri</MudText> 
                        <MudSpacer></MudSpacer>
                        <MudText Style="font-size:14px; font-weight:bold">@kamarieri.Vlera.ToString(".00")€</MudText>
                    </div>
@@ -34,6 +25,7 @@
 </MudExpansionPanels>
 
 @code {
+    public bool isExpanded1 { get; set; }
 
     private IEnumerable<DetaletEFaturimit> Orders;
 
@@ -45,17 +37,23 @@
     public IEnumerable<KamDheVlerat> GetSipasKamarieritTotal()
     {
         IEnumerable<KamDheVlerat> kamarierat = from d in Orders
-                                        group d by new
-                                        {
-                                            d.kam
-                                        } into grp
-                                        select new KamDheVlerat()
+                                               group d by new
+                                               {
+                                                   d.kam
+                                               } into grp
+                                               select new KamDheVlerat()
                                                 {
                                                     Kamarieri = grp.Key.kam,
                                                     Vlera = grp.Sum(s => decimal.Parse(s.vlera))
                                                 };
         return kamarierat.OrderByDescending(p => p.Vlera).ToList();
     }
+
+    private void ExpandedChanged()
+    {
+        isExpanded1 = !isExpanded1;
+    }
+
 
     public partial class KamDheVlerat
     {
