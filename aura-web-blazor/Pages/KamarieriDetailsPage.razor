@@ -1,0 +1,46 @@
+﻿@page "/kamarieri/{kam}"
+@using Data.Models
+
+<MudText Align="Align.Center" Style="margin-bottom:15px;margin-top:30px; font-size:16px; font-weight:bold;">Faturat e kamarierit:</MudText>
+<MudText Align="Align.Center" Style="margin-bottom:15px;margin-top:10px; font-size:18px; font-weight:bold;">@Kam</MudText>
+
+
+<aura_web_blazor.Components.ButtonKthehuComponent></aura_web_blazor.Components.ButtonKthehuComponent>
+<br />
+
+<MudTable Striped=true Dense=true Style="font-size:small" Items="@GetFaturatSipasKamarierit(@Kam)" Breakpoint="Breakpoint.None" >
+    <HeaderContent>
+        <MudTh>Produkti</MudTh>
+        <MudTh>Sasia</MudTh>
+        <MudTh>Vlera</MudTh>
+        <MudTh>Tavolina</MudTh>
+        <MudTh>Kamarieri</MudTh>
+    </HeaderContent>
+    <RowTemplate>
+        <MudTd >@context.artikulli</MudTd>
+        <MudTd  Style="text-align:center">@context.sasia</MudTd>
+        <MudTd  Style="text-align:center">@decimal.Parse(context.vlera).ToString("0.00")</MudTd>
+        <MudTd Style="text-align:center" >@context.tav <br /> @DateTime.Parse(context.ora).ToString("HH:mm:ss")</MudTd>
+        <MudTd Style="text-align:right" >@context.kam</MudTd>
+    </RowTemplate>
+</MudTable>
+
+@code {
+    [Parameter]
+    public string? Kam { get; set; }
+
+    private IEnumerable<DetaletEFaturimit>? Orders;
+
+    [Parameter]
+    public bool TakeAll { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        Orders = await new Data.GetData().GetDetaletAsync();
+    }
+
+    protected IEnumerable<DetaletEFaturimit> GetFaturatSipasKamarierit(string kam)
+    {
+        return Orders.Where(d=>d.kam.Equals(kam)).OrderByDescending(d => DateTime.Parse(d.ora));
+    }
+}

@@ -7,7 +7,7 @@
     @foreach(var d in GetTavolinatAktive())
     {
         <MudItem xs="3">
-            <NumriTavolinesComponent NumriTavolines="@d.Tavolina" ></NumriTavolinesComponent>
+            <NumriTavolinesComponent NumriTavolines="@d.Tavolina" KaPorosi=@d.isActive ></NumriTavolinesComponent>
         </MudItem>
     }
 </MudGrid>
@@ -23,17 +23,18 @@
 
     protected List<Tavolinat> GetTavolinatAktive()
     {
-       return (from d in Orders
-                        group d by new
-                        {
-                            d.tav
-                        } into grp
-                        select new Tavolinat
+        return (from d in Orders
+                group d by new
+                {
+                    d.tav
+                } into grp
+                select new Tavolinat
                         {
                             Tavolina = grp.Key.tav,
                             isActive = grp.GroupBy(p=> p.eshteMbyllur).Count() == 1 ? false : true,
-                        }).OrderBy(d=>d.Tavolina).ToList();
+                        }).OrderBy(d => d.Tavolina).OrderByDescending(d=>d.isActive).ToList();
     }
+
 
     public partial class Tavolinat
     {

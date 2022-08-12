@@ -1,9 +1,9 @@
 ﻿@inject NavigationManager UriHelper
 
 
-<MudPaper Elevation="3" >
+<MudPaper  Outlined=true Elevation="3" Style="@SetStyle()">
     @*<a onclick=@NavigateTo>*@
-                <MudText Style="text-align:center; padding:15px;">@NumriTavolines</MudText>
+        <MudText Style="text-align:center; padding:15px;">@NumriTavolines</MudText>
     @*</a>*@
 </MudPaper>
 
@@ -13,9 +13,19 @@
 
     [Parameter]
     public string NumriTavolines { get; set; }
-    
+    [Parameter]
+    public bool KaPorosi { get; set; }
+
+
     protected void NavigateTo()
     {
         UriHelper.NavigateTo("/");
     }
+
+    protected string SetStyle()
+    {
+       return KaPorosi ? "background-color:rgba(76, 175, 80, 0.4);" : "";
+    }
+
+    
 }

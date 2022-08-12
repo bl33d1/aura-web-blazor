@@ -2,7 +2,7 @@
 @inject NavigationManager UriHelper
 <MudText Align="Align.Center" Style="margin-bottom:15px;margin-top:30px; font-size:16px; font-weight:bold;">Faturat e fundit</MudText>
 
-<MudTable Striped=true Dense=true Style="font-size:small" Items="@GetFaturat(@TakeAll)" Breakpoint="Breakpoint.None" FixedHeader=true FixedFooter=true>
+<MudTable Striped=true Hover=true Dense=true Style="font-size:small" Items="@GetFaturat(@TakeAll)" Breakpoint="Breakpoint.None" >
     <HeaderContent>
         <MudTh>Produkti</MudTh>
         <MudTh>Sasia</MudTh>
@@ -11,13 +11,15 @@
         <MudTh>Kamarieri</MudTh>
     </HeaderContent>
     <RowTemplate>
-        <MudTd >@context.artikulli</MudTd>
-        <MudTd >@context.sasia</MudTd>
+        <MudTd Style="text-align:left">@context.artikulli</MudTd>
+        <MudTd Style="text-align:center">@context.sasia</MudTd>
         <MudTd >@decimal.Parse(context.vlera).ToString("0.00")</MudTd>
-        <MudTd >@context.tav <br /> @DateTime.Parse(context.ora).ToString("HH:mm:ss")</MudTd>
+        <MudTd Style="text-align:center">@context.tav <br /> @DateTime.Parse(context.ora).ToString("HH:mm:ss")</MudTd>
         <MudTd >@context.kam</MudTd>
     </RowTemplate>
-    <FooterContent>
+    <FooterContent >
+            
+            <MudButton @onclick=Navigate> @(TakeAll ? "Kthehu" : "Shiko te gjitha")</MudButton>
     </FooterContent>
 </MudTable>
 

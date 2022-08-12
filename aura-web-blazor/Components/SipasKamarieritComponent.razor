@@ -1,7 +1,7 @@
 ﻿@using Data.Models
 <MudText  Align="Align.Center" Style="margin-bottom:15px; font-size:16px; font-weight:bold;">Sipas Kamarierit</MudText>
 
-<MudExpansionPanels Elevation="5" Style="overflow-x: auto;" Dense=true >
+<MudExpansionPanels Elevation="2" Style="overflow-x: auto;" Dense=true >
 
     
         @foreach (var kamarieri in GetSipasKamarieritTotal())
@@ -11,7 +11,7 @@
                    <div class="d-flex">
                        @*Change value of Kam when clicked*@
                        @*<MudText Style="@(isExpanded1?"font-size:18px":"font-size:14px")">@kamarieri.Kamarieri</MudText> *@
-                       <MudText Style="font-size:14px">@kamarieri.Kamarieri</MudText> 
+                       <MudText Style="font-size:14px; font-weight:bold">@kamarieri.Kamarieri</MudText> 
                        <MudSpacer></MudSpacer>
                        <MudText Style="font-size:14px; font-weight:bold">@kamarieri.Vlera.ToString(".00")€</MudText>
                    </div>
