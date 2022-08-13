@@ -1,0 +1,62 @@
+﻿@using Data.Models
+<style>
+    .mud-tabs-panels {
+        padding: 0px !important;
+    }
+</style>
+<MudText Align="Align.Center" Style="margin-bottom:15px;margin-top:30px; font-size:18px; font-weight:bold;">Produktet</MudText>
+<MudItem xs="12">
+
+</MudItem>
+<aura_web_blazor.Components.ButtonKthehuComponent></aura_web_blazor.Components.ButtonKthehuComponent>
+<br />
+<MudTabs Elevation="2" Rounded="true" ApplyEffectsToContainer="true" PanelClass="pa-6">
+    <MudTabPanel Text="Te gjitha kategorit">
+        <TableProduktetDetailsComponent Prods="@GetProduktetEGrumbulluara()"></TableProduktetDetailsComponent>
+    </MudTabPanel>
+    @foreach(KeyValuePair<string, string> entry in Data.Categories.Category)
+    {
+        <MudTabPanel Style="padding-left:0px;" Text="@entry.Key">
+            <TableProduktetDetailsComponent Prods="@GetProduktetEGrumbulluara(entry.Value)"></TableProduktetDetailsComponent>
+        </MudTabPanel>
+    }
+</MudTabs>
+
+@code {
+
+    private IEnumerable<DetaletEFaturimit>? Orders;
+    private IEnumerable<Produktet>? Prods;
+
+    protected override async Task OnInitializedAsync()
+    {
+        Orders = await new Data.GetData().GetDetaletAsync();
+        Prods = from d in Orders
+                        group d by new
+                        {
+                            d.artikulli,
+                            d.qmimi,
+                            d.nj2
+                        } into grp
+                        select new Produktet
+                        {
+                            Produkti = grp.Key.artikulli,
+                            Qmimi = decimal.Parse(grp.Key.qmimi),
+                            Sasia = grp.Sum(d => int.Parse(d.sasia)),
+                            Vlera = grp.Sum(d => decimal.Parse(d.vlera)),
+                            Nj2 = grp.Key.nj2
+                        };
+        
+    }
+
+
+
+    public IEnumerable<Produktet> GetProduktetEGrumbulluara(string category)
+    {
+       return Prods.Where(d=>d.Nj2.Equals(category)).OrderByDescending(d=>d.Sasia);
+    }
+    public IEnumerable<Produktet> GetProduktetEGrumbulluara()
+    {
+       return Prods.OrderByDescending(d=>d.Sasia);
+    }
+        
+    }

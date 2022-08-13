@@ -1,0 +1,13 @@
+﻿@using aura_web_blazor.Components
+@page "/tavolinat/{tavolina}"
+
+<PageTitle>Tavolina: @Tavolina</PageTitle>
+
+<PageTitleComponent Text="@Tavolina"></PageTitleComponent>
+
+<TableDetajetSipasTavolinesComponent Tavolina="@Tavolina"></TableDetajetSipasTavolinesComponent>
+
+@code {
+    [Parameter]
+    public string Tavolina { get; set; }
+}

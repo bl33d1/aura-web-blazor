@@ -1,5 +1,24 @@
-﻿<h3>TableProduktetDetailsComponent</h3>
+﻿
+@using Data.Models
+
+<MudTable AllowUnsorted=true Striped=true Dense=true Style="font-size:small;" Items="@Prods" Breakpoint="Breakpoint.None" >
+    <HeaderContent>
+        <MudTh>Produkti</MudTh>
+        <MudTh>Sasia</MudTh>
+        <MudTh>Qmimi</MudTh>
+        <MudTh>Vlera</MudTh>
+    </HeaderContent>
+    <RowTemplate>
+        <MudTd >@context.Produkti</MudTd>
+        <MudTd >@context.Sasia</MudTd>
+        <MudTd >@context.Qmimi.ToString("0.00")€</MudTd>
+        <MudTd Style="text-align:right" >@context.Vlera.ToString("0.00")€</MudTd>
+    </RowTemplate>
+</MudTable>
+
+
 
 @code {
-
+    [Parameter]
+    public IEnumerable<Produktet> Prods { get; set; }
 }

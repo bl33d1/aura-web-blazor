@@ -1,0 +1,38 @@
+﻿@using aura_web_blazor.Components
+@using Data.Models
+@inject NavigationManager UriHelper 
+@*<MudText Align="Align.Center" Style="margin-bottom:15px;margin-top:30px; font-size:16px; font-weight:bold;">Faturat e fundit</MudText>*@
+<ButtonKthehuComponent Text="Kthehu te tavolinat" Link="/tavolinat"></ButtonKthehuComponent>
+<MudTable Striped=true Hover=true Dense=true Style="font-size:small" Items="@GetFaturat()" Breakpoint="Breakpoint.None" >
+    <HeaderContent>
+        <MudTh>Produkti</MudTh>
+        <MudTh>Sasia</MudTh>
+        <MudTh>Vlera</MudTh>
+        <MudTh>Kamarieri</MudTh>
+    </HeaderContent>
+    <RowTemplate>
+        <MudTd Style="text-align:left" >@context.artikulli</MudTd>
+        <MudTd Style="text-align:center">@context.sasia</MudTd>
+        <MudTd Style="text-align:center">@context.vlera</MudTd>
+        <MudTd Style="text-align:center">@context.kam <br /> @DateTime.Parse(context.ora).ToString("HH:mm:ss")</MudTd>
+    </RowTemplate>
+</MudTable>
+
+@code {
+
+    [Parameter]
+    public string Tavolina { get; set; }
+
+    private IEnumerable<DetaletEFaturimit>? Orders;
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        Orders = await new Data.GetData().GetDetaletAsync();
+    }
+
+    protected IEnumerable<DetaletEFaturimit> GetFaturat()
+    {
+         return Orders.Where(d=>d.tav.Equals(Tavolina)).OrderByDescending(d => DateTime.Parse(d.ora));
+    }
+}

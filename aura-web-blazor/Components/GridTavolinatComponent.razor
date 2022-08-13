@@ -1,6 +1,7 @@
 ﻿@using Data.Models
 
 
+<MudText Align="Align.Center" Style="margin-bottom:15px;margin-top:30px; font-size:18px; font-weight:bold;">Tavolinat</MudText>
 
 <MudGrid>
     <ButtonKthehuComponent></ButtonKthehuComponent>
@@ -32,7 +33,7 @@
                         {
                             Tavolina = grp.Key.tav,
                             isActive = grp.GroupBy(p=> p.eshteMbyllur).Count() == 1 ? false : true,
-                        }).OrderBy(d => d.Tavolina).OrderByDescending(d=>d.isActive).ToList();
+                        }).OrderByDescending(d=>d.isActive).OrderBy(d => d.Tavolina).ToList();
     }
 
 

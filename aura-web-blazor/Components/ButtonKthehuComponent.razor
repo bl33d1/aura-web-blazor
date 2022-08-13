@@ -1,8 +1,11 @@
 ﻿
 <MudItem xs="12">
-    <MudButton Link="/" FullWidth=true Variant="Variant.Filled" Color="Color.Primary" Class="my-5">Kthehu</MudButton>
+    <MudButton Link="@Link" FullWidth=true Variant="Variant.Filled" Color="Color.Primary" Class="my-5">@Text</MudButton>
 </MudItem>
 
 @code {
-
+    [Parameter]
+    public string Link { get; set; } = "/";
+    [Parameter]
+    public string Text { get; set; } = "Kthehu";
 }

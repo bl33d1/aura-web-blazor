@@ -1,57 +1,8 @@
 ﻿@page "/produktet"
-@using Data.Models
+@using Components
 
-<MudText Align="Align.Center" Style="margin-bottom:15px;margin-top:30px; font-size:18px; font-weight:bold;">Produktet</MudText>
-
-<aura_web_blazor.Components.ButtonKthehuComponent></aura_web_blazor.Components.ButtonKthehuComponent>
-<br />
-
-<MudTable AllowUnsorted=true Striped=true Dense=true Style="font-size:small" Items="@GetProduktetEGrumbulluara()" Breakpoint="Breakpoint.None" >
-    <HeaderContent>
-        <MudTh>Produkti</MudTh>
-        <MudTh>Sasia</MudTh>
-        <MudTh>Qmimi</MudTh>
-        <MudTh>Vlera</MudTh>
-    </HeaderContent>
-    <RowTemplate>
-        <MudTd >@context.Produkti</MudTd>
-        <MudTd >@context.Sasia</MudTd>
-        <MudTd >@context.Qmimi.ToString("0.00")€</MudTd>
-        <MudTd Style="text-align:right" >@context.Vlera.ToString("0.00")€</MudTd>
-    </RowTemplate>
-</MudTable>
+<aura_web_blazor.Components.TabsProduktetComponent></aura_web_blazor.Components.TabsProduktetComponent>
 
 @code {
-    private IEnumerable<DetaletEFaturimit>? Orders;
 
-    protected override async Task OnInitializedAsync()
-    {
-        Orders = await new Data.GetData().GetDetaletAsync();
-    }
-
-    public IEnumerable<Produktet> GetProduktetEGrumbulluara()
-    {
-        IEnumerable<Produktet> produktet = from d in Orders
-                                           group d by new
-                                           {
-                                               d.artikulli,
-                                               d.qmimi
-                                           } into grp
-                                           select new Produktet
-                                           {
-                                                Produkti = grp.Key.artikulli,
-                                                Qmimi = decimal.Parse(grp.Key.qmimi),
-                                                Sasia = grp.Sum(d => int.Parse(d.sasia)),
-                                                Vlera = grp.Sum(d => decimal.Parse(d.vlera))
-                                           };
-        return produktet.OrderByDescending(d=>d.Sasia);
-    }
-
-    public partial class Produktet
-    {
-        public string Produkti { get; set; }
-        public int Sasia { get; set; }
-        public decimal Qmimi { get; set; }
-        public decimal Vlera { get; set; }
-    }
 }
