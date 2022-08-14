@@ -1,7 +1,11 @@
 ﻿
 @using Data.Models
 
-<MudTable AllowUnsorted=true Striped=true Dense=true Style="font-size:small;" Items="@Prods" Breakpoint="Breakpoint.None" >
+<MudTable AllowUnsorted=true Filter="new Func<Produktet,bool>(FilterFunc1)" @bind-SelectedItem="selectedItem1" Striped=false Dense=true Style="font-size:small;" Items="@Prods" Breakpoint="Breakpoint.None" >
+      <ToolBarContent>
+        <MudTextField @bind-Value="searchString1" FullWidth=true Placeholder="Kerko produktin" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0 mb-2"></MudTextField>
+        <MudSpacer />
+    </ToolBarContent>
     <HeaderContent>
         <MudTh>Produkti</MudTh>
         <MudTh>Sasia</MudTh>
@@ -21,4 +25,23 @@
 @code {
     [Parameter]
     public IEnumerable<Produktet> Prods { get; set; }
+
+
+     private string searchString1 = "";
+    private Produktet selectedItem1 = null;
+    private HashSet<Produktet> selectedItems = new HashSet<Produktet>();
+
+
+
+    private bool FilterFunc1(Produktet element) => FilterFunc(element, searchString1);
+
+    private bool FilterFunc(Produktet element, string searchString)
+    {
+        if (string.IsNullOrWhiteSpace(searchString))
+            return true;
+        if (element.Produkti.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+            return true;
+        return false;
+    }
+
 }

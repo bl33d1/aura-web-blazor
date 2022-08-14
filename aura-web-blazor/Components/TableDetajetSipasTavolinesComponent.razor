@@ -2,8 +2,8 @@
 @using Data.Models
 @inject NavigationManager UriHelper 
 @*<MudText Align="Align.Center" Style="margin-bottom:15px;margin-top:30px; font-size:16px; font-weight:bold;">Faturat e fundit</MudText>*@
-<ButtonKthehuComponent Text="Kthehu te tavolinat" Link="/tavolinat"></ButtonKthehuComponent>
-<MudTable Striped=true Hover=true Dense=true Style="font-size:small" Items="@GetFaturat()" Breakpoint="Breakpoint.None" >
+
+<MudTable Striped=false Hover=true Dense=true Style="font-size:small;border: 1px solid gray;" Items="@GetFaturat(@Aktive)" Breakpoint="Breakpoint.None" >
     <HeaderContent>
         <MudTh>Produkti</MudTh>
         <MudTh>Sasia</MudTh>
@@ -19,9 +19,11 @@
 </MudTable>
 
 @code {
-
+    
     [Parameter]
     public string Tavolina { get; set; }
+    [Parameter]
+    public bool Aktive { get; set; }
 
     private IEnumerable<DetaletEFaturimit>? Orders;
 
@@ -31,8 +33,11 @@
         Orders = await new Data.GetData().GetDetaletAsync();
     }
 
-    protected IEnumerable<DetaletEFaturimit> GetFaturat()
+    protected IEnumerable<DetaletEFaturimit> GetFaturat(bool aktive)
     {
-         return Orders.Where(d=>d.tav.Equals(Tavolina)).OrderByDescending(d => DateTime.Parse(d.ora));
+        if(aktive)
+         return Orders.Where(d=>d.tav.Equals(Tavolina)).Where(d=>d.eshteMbyllur.Equals(d.tav)).OrderByDescending(d => DateTime.Parse(d.ora));
+        else
+         return Orders.Where(d=>d.tav.Equals(Tavolina)).Where(d=>d.eshteMbyllur.Equals("x") ||d.eshteMbyllur.Equals("X") ).OrderByDescending(d => DateTime.Parse(d.ora));
     }
 }

@@ -2,27 +2,27 @@
 @inject NavigationManager UriHelper
 <MudText Align="Align.Center" Style="margin-bottom:15px;margin-top:30px; font-size:16px; font-weight:bold;">Faturat e fundit</MudText>
 
-<MudTable Striped=true Hover=true Dense=true Style="font-size:small" Items="@GetFaturat(true)" Breakpoint="Breakpoint.None" >
+<MudTable Striped=false Hover=true Dense=true Style="font-size:small;border: 1px solid gray;" Items="@GetFaturat(true)" Breakpoint="Breakpoint.None" >
     <HeaderContent>
         <MudTh>Produkti</MudTh>
         <MudTh>Sasia</MudTh>
-        <MudTh>Vlera</MudTh>
         <MudTh>Tavolina</MudTh>
         <MudTh>Kamarieri</MudTh>
+        <MudTh>Vlera</MudTh>
     </HeaderContent>
     <RowTemplate>
         <MudTd Style="text-align:left">@context.artikulli</MudTd>
         <MudTd Style="text-align:center">@context.sasia</MudTd>
-        <MudTd >@decimal.Parse(context.vlera).ToString("0.00")</MudTd>
         <MudTd Style="text-align:center">@context.tav <br /> @DateTime.Parse(context.ora).ToString("HH:mm:ss")</MudTd>
         <MudTd >@context.kam</MudTd>
+        <MudTd >@decimal.Parse(context.vlera).ToString("0.00")</MudTd>
     </RowTemplate>
-    <FooterContent >
+@*    <FooterContent >
             
             <MudButton @onclick=Navigate> @(TakeAll ? "Kthehu" : "Shiko te gjitha")</MudButton>
-    </FooterContent>
+    </FooterContent>*@
     <PagerContent >
-        <MudTablePager RowsPerPageString="Numri rreshtave per nje faqe"/>
+        <MudTablePager RowsPerPageString="Numri rreshtave:"/>
     </PagerContent>
 </MudTable>
 

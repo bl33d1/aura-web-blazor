@@ -1,13 +1,35 @@
 ﻿@using aura_web_blazor.Components
-@page "/tavolinat/{tavolina}"
-
+@page "/tavolinat/{tavolina}/{kaPorosi:bool}"
+<style>
+    .mud-tabs-panels {
+        padding: 0px !important;
+    }
+</style>
 <PageTitle>Tavolina: @Tavolina</PageTitle>
 
 <PageTitleComponent Text="@Tavolina"></PageTitleComponent>
 
-<TableDetajetSipasTavolinesComponent Tavolina="@Tavolina"></TableDetajetSipasTavolinesComponent>
+<ButtonKthehuComponent Text="Kthehu te tavolinat" Link="/tavolinat"></ButtonKthehuComponent>
+
+<MudTabs Elevation="1" Rounded="true" ApplyEffectsToContainer="true" PanelClass="pa-6">
+    @if (KaPorosi)
+    {
+        <MudTabPanel Text="Aktive">
+            <TableDetajetSipasTavolinesComponent Aktive=true Tavolina="@Tavolina"></TableDetajetSipasTavolinesComponent>
+        </MudTabPanel>
+    }
+    <MudTabPanel Text="Jo aktive">
+        <TableDetajetSipasTavolinesComponent Aktive=false Tavolina="@Tavolina"></TableDetajetSipasTavolinesComponent>
+    </MudTabPanel>
+    
+</MudTabs>
+
+
+
 
 @code {
     [Parameter]
     public string Tavolina { get; set; }
+    [Parameter]
+    public bool KaPorosi { get; set; }
 }

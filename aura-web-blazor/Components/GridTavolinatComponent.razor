@@ -1,6 +1,5 @@
 ﻿@using Data.Models
 
-
 <MudText Align="Align.Center" Style="margin-bottom:15px;margin-top:30px; font-size:18px; font-weight:bold;">Tavolinat</MudText>
 
 <MudGrid>
@@ -8,7 +7,7 @@
     @foreach(var d in GetTavolinatAktive())
     {
         <MudItem xs="3">
-            <NumriTavolinesComponent NumriTavolines="@d.Tavolina" KaPorosi=@d.isActive ></NumriTavolinesComponent>
+            <NumriTavolinesComponent NumriTavolines="@(d.Tavolina.Substring(0,1).Equals("0")? d.Tavolina.Substring(1):d.Tavolina)" KaPorosi=@d.isActive ></NumriTavolinesComponent>
         </MudItem>
     }
 </MudGrid>
@@ -24,16 +23,37 @@
 
     protected List<Tavolinat> GetTavolinatAktive()
     {
-        return (from d in Orders
-                group d by new
-                {
-                    d.tav
-                } into grp
-                select new Tavolinat
-                        {
-                            Tavolina = grp.Key.tav,
-                            isActive = grp.GroupBy(p=> p.eshteMbyllur).Count() == 1 ? false : true,
-                        }).OrderByDescending(d=>d.isActive).OrderBy(d => d.Tavolina).ToList();
+        List<Tavolinat> tavolinat = (from d in Orders
+                                     group d by new
+                                     {
+                                         d.tav
+                                     } into grp
+                                     select new Tavolinat
+                                        {
+                                            Tavolina = grp.Key.tav,
+                                            isActive = (grp.GroupBy(p=> p.eshteMbyllur).Count() == 1) && ((grp.Select(d=> d.eshteMbyllur).First().Equals("x")) || (grp.Select(d=> d.eshteMbyllur).First().Equals("X"))) ? false : true,
+                                        }).OrderByDescending(d=>d.isActive).OrderBy(d => d.Tavolina).ToList();
+        return OrderList(tavolinat);
+    }
+
+    protected List<Tavolinat> OrderList(List<Tavolinat> tavolinat)
+    {
+        List<Tavolinat> ordered = new List<Tavolinat>();
+        string edited = "";
+        foreach(var tav in tavolinat)
+        {
+            if(tav.Tavolina.Length == 1)
+            {
+                edited = "0" + tav.Tavolina;
+                ordered.Add(new Tavolinat(edited,tav.isActive));
+                continue;
+            }
+            ordered.Add(tav);
+        }
+
+        ordered = ordered.OrderBy(p => p.Tavolina).ToList();
+        
+        return ordered;
     }
 
 
@@ -41,5 +61,11 @@
     {
         public string? Tavolina { get; set; }
         public bool isActive { get; set; }
+        public Tavolinat() { }
+        public Tavolinat(string tavolina, bool isActive)
+        {
+            Tavolina = tavolina;
+            this.isActive = isActive;
+        }
     }
 }
