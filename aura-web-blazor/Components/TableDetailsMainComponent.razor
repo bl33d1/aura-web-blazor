@@ -1,34 +1,31 @@
 ﻿@using Data.Models
-<MudSimpleTable  Style="overflow-x: auto;" >
+<MudSimpleTable Elevation="0"  Style="overflow-x: auto;     " >
 
     <tbody>
-        @foreach (var order in Orders.Where(d=> d.nj2.Equals(Category)).Take(0))
+        @if(porosite > 0)
         {
             <tr>
-                <td>@order.artikulli</td>
-                <td style="font-weight:bolder; text-align:right;">@ReturnSasiaPerProdukt(order.artikulli)</td>
+                <td>Numri porosive:</td>
+                <td style="font-weight:bolder; text-align:right;">@porosite</td>
+            </tr>
+            <tr>
+                <td>Totali ditor:</td>
+                <td style="font-weight:bolder; font-size:17.5px;text-align:right;">@Orders.Where(d=>d.nj2.Equals(Category)).Sum(d=> decimal.Parse(d.vlera)).ToString(".00")€</td>
+            </tr>
+            <tr>
+                <td>Rush hour:</td>
+                <td style="font-weight:bolder; text-align:right;">@ReturnRushHour(@Category)</td>
+            </tr>
+            <tr>
+                <td>Paradite (deri 15:00):☀️</td>
+                <td style="font-weight:bolder; text-align:right;">@ReturnParadite("para")€</td>
+            </tr>
+            <tr>
+                <td>Pasdite (pas 15:00):🌙</td>
+                <td style="font-weight:bolder; text-align:right;">@ReturnParadite("pas")€</td>
             </tr>
         }
-        <tr>
-            <td>Numri porosive:</td>
-            <td style="font-weight:bolder; text-align:right;">@Orders.Where(d=>d.nj2.Equals(Category)).Count().ToString()</td>
-        </tr>
-        <tr>
-            <td>Totali ditor:</td>
-            <td style="font-weight:bolder; font-size:17.5px;text-align:right;">@Orders.Where(d=>d.nj2.Equals(Category)).Sum(d=> decimal.Parse(d.vlera)).ToString(".00")€</td>
-        </tr>
-        <tr>
-            <td>Rush hour:</td>
-            <td style="font-weight:bolder; text-align:right;">@ReturnRushHour()</td>
-        </tr>
-        <tr>
-            <td>Paradite (deri 15:00):☀️</td>
-            <td style="font-weight:bolder; text-align:right;">@ReturnParadite("para")€</td>
-        </tr>
-        <tr>
-            <td>Pasdite (pas 15:00):🌙</td>
-            <td style="font-weight:bolder; text-align:right;">@ReturnParadite("pas")€</td>
-        </tr>
+        
     </tbody>
 </MudSimpleTable>
 
@@ -37,12 +34,14 @@
 
     [Parameter]
     public string? Category { get; set; }
+    int porosite;
 
     private IEnumerable<DetaletEFaturimit>? Orders;
 
     protected override async Task OnInitializedAsync()
     {
         Orders = await new Data.GetData().GetDetaletAsync();
+        porosite = Orders.Where(d=>d.nj2.Equals(Category)).Count();
     }
 
     protected string ReturnSasiaPerProdukt(string artikulli)
@@ -58,10 +57,10 @@
     }
 
 
-    protected string ReturnRushHour()
+    protected string ReturnRushHour(string category)
     {
         //return "13:00";
-        List<OraModel> query = (from d in Orders
+        List<OraModel> query = (from d in Orders.Where(d=>d.nj2.Equals(category))
                                 group d by DateTime.Parse(d.ora).Hour
                         into grp
                                 select new OraModel()

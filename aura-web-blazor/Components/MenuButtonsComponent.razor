@@ -1,9 +1,9 @@
 ﻿@using Data.Models
 @inject NavigationManager UriHelper
-<MudPaper Style="border: 1px solid gray;">
+<MudPaper Class="rounded-lg" Style=";">
     <a onclick=@NavigateTo>
                 
-        <MudCardContent>
+        <MudCardContent  Class="rounded-lg">
             <div class="d-flex">
                 <MudIcon Icon="@Icon"></MudIcon>
                 <MudText Style="padding-left:10px; font-weight:bold;">@Text</MudText>

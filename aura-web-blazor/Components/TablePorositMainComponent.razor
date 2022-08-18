@@ -2,27 +2,27 @@
 @inject NavigationManager UriHelper
 <MudText Align="Align.Center" Style="margin-bottom:15px;margin-top:30px; font-size:16px; font-weight:bold;">Faturat e fundit</MudText>
 
-<MudTable Striped=false Hover=true Dense=true Style="font-size:small;border: 1px solid gray;" Items="@GetFaturat(true)" Breakpoint="Breakpoint.None" >
+<MudTable Class="rounded-lg" Striped=false Hover=true Dense=true Style="font-size:small;;" Items="@GetFaturat(true)" Breakpoint="Breakpoint.None" >
     <HeaderContent>
-        <MudTh>Produkti</MudTh>
-        <MudTh>Sasia</MudTh>
-        <MudTh>Tavolina</MudTh>
-        <MudTh>Kamarieri</MudTh>
-        <MudTh>Vlera</MudTh>
+        <MudTh Style="font-weight:bold">Produkti</MudTh>
+        <MudTh Style="font-weight:bold">Sasia</MudTh>
+        <MudTh Style="font-weight:bold">Tavolina</MudTh>
+        <MudTh Style="font-weight:bold">Kamarieri</MudTh>
+        <MudTh Style="font-weight:bold">Vlera</MudTh>
     </HeaderContent>
     <RowTemplate>
         <MudTd Style="text-align:left">@context.artikulli</MudTd>
         <MudTd Style="text-align:center">@context.sasia</MudTd>
         <MudTd Style="text-align:center">@context.tav <br /> @DateTime.Parse(context.ora).ToString("HH:mm:ss")</MudTd>
-        <MudTd >@context.kam</MudTd>
-        <MudTd >@decimal.Parse(context.vlera).ToString("0.00")</MudTd>
+        <MudTd Style="text-align:center">@context.kam</MudTd>
+        <MudTd >@decimal.Parse(context.vlera).ToString("0.00")€</MudTd>
     </RowTemplate>
 @*    <FooterContent >
             
             <MudButton @onclick=Navigate> @(TakeAll ? "Kthehu" : "Shiko te gjitha")</MudButton>
     </FooterContent>*@
     <PagerContent >
-        <MudTablePager RowsPerPageString="Numri rreshtave:"/>
+        <MudTablePager RowsPerPageString="Nr. rreshtave:"/>
     </PagerContent>
 </MudTable>
 

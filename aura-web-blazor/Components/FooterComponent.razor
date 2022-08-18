@@ -1,0 +1,42 @@
+﻿@using Microsoft.JSInterop
+@inject NavigationManager UriHelper
+
+  <footer class="footer d-flex justify-content-between" style="max-width:600px !important;background-color:@(MainColor)" id="footer">
+            <div class="col-4"style="width:33%;text-align:center;">
+                <MudButton Style="width:100%;color:white;"   OnClick="@(() => UriHelper.NavigateTo("/tavolinat"))" >
+                    <MudIcon Color="Color.Surface" Icon ="@Icons.Material.Filled.TableBar"></MudIcon>
+                </MudButton>
+            </div>
+            <div class="col-4" style="width:33%;text-align:center;">
+                <MudButton Style="width:100%;color:white"  OnClick="@(() => UriHelper.NavigateTo("/"))" >
+                    <MudIcon Color="Color.Surface" Icon ="@Icons.Material.Filled.Home"></MudIcon>
+                </MudButton>
+            </div>
+            <div class="col-4"style="width:33%;text-align:center;">
+                <MudButton Style="width:100%;color:white"  OnClick="@(() => UriHelper.NavigateTo("/produktet"))" >
+                    <MudIcon Color="Color.Surface" Icon ="@Icons.Material.Filled.BarChart"></MudIcon>
+                </MudButton>
+            </div>
+  </footer>
+
+@code {
+
+
+    [Inject] IJSRuntime JS { get; set; }
+
+    [Parameter]
+    public string MainColor { get; set; }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+         await JS.InvokeAsync<string>("FooterResized", DotNetObjectReference.Create(this));
+    }
+
+    protected void NavigateTo(string page)
+    {
+        UriHelper.NavigateTo(page);
+    }
+
+}
+
+

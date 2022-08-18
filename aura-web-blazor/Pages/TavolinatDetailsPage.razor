@@ -7,18 +7,20 @@
 </style>
 <PageTitle>Tavolina: @Tavolina</PageTitle>
 
-<PageTitleComponent Text="@Tavolina"></PageTitleComponent>
+<PageTitleComponent Text="@GetTitle()"></PageTitleComponent>
 
 <ButtonKthehuComponent Text="Kthehu te tavolinat" Link="/tavolinat"></ButtonKthehuComponent>
+<SimpleTableTavolinaDetailsComponent Tavolina="@Tavolina" IsActive="@kaPorosi"></SimpleTableTavolinaDetailsComponent>
+
 
 <MudTabs Elevation="1" Rounded="true" ApplyEffectsToContainer="true" PanelClass="pa-6">
-    @if (KaPorosi)
+    @if (kaPorosi)
     {
-        <MudTabPanel Text="Aktive">
+        <MudTabPanel Text="Aktivet">
             <TableDetajetSipasTavolinesComponent Aktive=true Tavolina="@Tavolina"></TableDetajetSipasTavolinesComponent>
         </MudTabPanel>
     }
-    <MudTabPanel Text="Jo aktive">
+    <MudTabPanel Text="Te mbyullrat">
         <TableDetajetSipasTavolinesComponent Aktive=false Tavolina="@Tavolina"></TableDetajetSipasTavolinesComponent>
     </MudTabPanel>
     
@@ -31,5 +33,10 @@
     [Parameter]
     public string Tavolina { get; set; }
     [Parameter]
-    public bool KaPorosi { get; set; }
+    public bool kaPorosi { get; set; }
+
+    string GetTitle()
+    {
+        return "Tavolina: " + Tavolina;
+    }
 }

@@ -1,11 +1,13 @@
-﻿@inherits LayoutComponentBase
+﻿@using Blazored.LocalStorage
+@inherits LayoutComponentBase
 @inject NavigationManager UriHelper
+
 <PageTitle>aura-web-blazor</PageTitle>
 
-<MudThemeProvider @bind-IsDarkMode="@_isDarkMode" Theme="MyCustomTheme"/>
+<MudThemeProvider @bind-IsDarkMode="@_isDarkMode" Theme="@_currentTheme"/>
 
 <MudLayout  Style="max-width:600px;" Class="mx-auto mt-5">
-    <MudAppBar Elevation="1" Dense="true" >
+    <MudAppBar  Elevation="1" Dense="true" >
         
              <MudButton Style="color:white;" OnClick="@(() => OpenDrawer(Anchor.Top))"><MudIcon Icon="@Icons.Material.Filled.Menu" OnClick="@(() => OpenDrawer(Anchor.Top))" Title="Favorite" /></MudButton> 
            <MudSpacer />
@@ -32,19 +34,26 @@
             <MudNavLink Icon="@Icons.Filled.Assignment" OnClick='(() => NavigateTo("/produktet"))'>Produktet e shitura</MudNavLink>
         </MudNavMenu>
         <MudNavMenu>
-            <MudNavLink Icon="@(_isDarkMode ? @Icons.Filled.LightMode : @Icons.Filled.DarkMode)" OnClick="(() => ChangeTheme())">Ndrysho ne @(_isDarkMode ? "Light Mode" : "Dark Mode")</MudNavLink>
+            <MudNavLink Icon="@(_isDarkMode ? @Icons.Filled.LightMode : @Icons.Filled.DarkMode)" OnClick="ChangeThemeAsync">Ndrysho ne @(_isDarkMode ? "Light Mode" : "Dark Mode")</MudNavLink>
         </MudNavMenu>
     </MudDrawer>
     <MudMainContent Class="mx-3"> 
         @Body
     </MudMainContent>
+
+    <aura_web_blazor.Components.FooterComponent MainColor="@(_themeName == "light" ?   appBarColorLight :"#393E46")"/>
 </MudLayout>
 
+
+
 @code {
+
+
     private MudTheme _theme = new();
     private bool _isDarkMode = false;
     bool open;
     Anchor anchor;
+    Color AppBarColor;
 
     void OpenDrawer(Anchor anchor)
     {
@@ -52,23 +61,117 @@
         this.anchor = anchor;
     }
 
+    
+
     void ChangeTheme()
     {
         _isDarkMode = !_isDarkMode;
+        
         StateHasChanged();
     }
 
     void NavigateTo(string url){
         UriHelper.NavigateTo(url);
     }
+ }
 
-    MudTheme MyCustomTheme = new MudTheme()
-    {
-        Palette = new Palette()
+@code{
+    
+        [Inject]
+        public ILocalStorageService LocalStorage { get; set; }
+
+        static string appBarColorLight = "#30557a";
+
+        protected async override Task OnAfterRenderAsync(bool firstTime)
         {
-            Primary = Colors.Blue.Default,
-            Secondary = Colors.Green.Accent4,
-            AppbarBackground = Colors.Blue.Default,
+            if (await LocalStorage.ContainKeyAsync("theme"))
+                _themeName = await LocalStorage.GetItemAsStringAsync("theme");
+            else
+                _themeName = "light";
+            _currentTheme = _themeName == "light" ? _lightTheme : _darkTheme;
+            StateHasChanged();
+
         }
-    };
+        protected async override Task OnInitializedAsync()
+        {
+
+            _currentTheme = _themeName == "light" ? _lightTheme : _darkTheme;
+            StateHasChanged();
+        }
+
+        MudTheme _currentTheme = null;
+
+        private string _themeName = "light";
+
+        MudTheme _darkTheme = new MudTheme
+        {
+            Palette = new Palette
+            {
+                AppbarBackground = "#393E46",
+                AppbarText = "#393E46",
+                Primary = "#5190cf",
+                TextPrimary = "#FFFFFF",
+                Background = "#222831",
+                TextSecondary = "#E2EEF6",
+                DrawerBackground = "#393E46",
+                DrawerText = "#FFFFFF",
+                Surface = "#393E46",
+                ActionDefault = "#0C1217",
+                ActionDisabled = "#2F678C",
+                TextDisabled = "#B0B0B0"
+            }
+        };
+        
+        MudTheme _lightTheme = new MudTheme
+        {
+            Palette = new Palette
+            {
+                AppbarBackground = appBarColorLight,
+                AppbarText = "#FFFFFF",
+                Primary = "#30557a",
+                TextPrimary = "#0C1217",
+                Background = "#F8f8f8",
+                TextSecondary = "#0C1217",
+                DrawerBackground = "#FFFFFF",
+                DrawerText = "#0C1217",
+                Surface = "#FFFFFF",
+                ActionDefault = "#0C1217",
+                ActionDisabled = "#2F678C",
+                TextDisabled = "#676767",
+            }
+        };
+        //MudTheme _lightTheme = new MudTheme
+        //{
+        //    Palette = new Palette
+        //    {
+        //        AppbarBackground = "#3F72AF",
+        //        AppbarText = "#FFFFFF",
+        //        Primary = "#007CD1",
+        //        TextPrimary = "#0C1217",
+        //        Background = "#DBE2EF",
+        //        TextSecondary = "#0C1217",
+        //        DrawerBackground = "#FFFFFF",
+        //        DrawerText = "#0C1217",
+        //        Surface = "#F9F7F7",
+        //        ActionDefault = "#0C1217",
+        //        ActionDisabled = "#2F678C",
+        //        TextDisabled = "#676767",
+        //    }
+        //};
+
+        private async Task ChangeThemeAsync()
+        {
+            if (_themeName == "light")
+            {
+                _currentTheme = _darkTheme;
+                _themeName = "dark";
+            }
+            else
+            {
+                _currentTheme = _lightTheme;
+                _themeName = "light";
+            }
+
+            await LocalStorage.SetItemAsStringAsync("theme", _themeName);
+        }
 }

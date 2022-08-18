@@ -1,12 +1,15 @@
 ﻿@using Data.Models
 <MudText  Align="Align.Center" Style="margin-bottom:15px; font-size:16px; font-weight:bold;">Sipas Kamarierit</MudText>
 
-<MudExpansionPanels Elevation="2" Style="overflow-x: auto;border: 1px solid gray;" Dense=true >
+<MudPaper Class="rounded-lg" Elevation="3">
+
+
+<MudExpansionPanels Class="rounded-lg" Elevation="1" Style="overflow-x: auto;" Dense=true >
 
     
         @foreach (var kamarieri in GetSipasKamarieritTotal())
         {
-           <MudExpansionPanel IsExpandedChanged="ExpandedChanged" >
+           <MudExpansionPanel  IsExpandedChanged="ExpandedChanged" >
                <TitleContent>
                    <div class="d-flex">
                        @*Change value of Kam when clicked*@
@@ -23,7 +26,7 @@
            
         }
 </MudExpansionPanels>
-
+</MudPaper>
 @code {
     public bool isExpanded1 { get; set; }
 

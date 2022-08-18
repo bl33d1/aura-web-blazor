@@ -1,0 +1,62 @@
+﻿@using Data.Models
+@inject NavigationManager UriHelper
+
+<MudSimpleTable Elevation="2"  Style="overflow-x: auto;" Class="mb-4" >
+
+    <tbody>
+        <tr>
+            <td>Numri total i porosive:</td>
+            <td style="font-weight:bolder; text-align:right;">@Orders.Where(d=>d.tav.Equals(Tavolina)).Count().ToString()</td>
+        </tr>
+        <tr>
+            <td>Shuma totale e porosive:</td>
+            <td style="font-weight:bolder; text-align:right;">@ReturnTotalin()€</td>
+        </tr>
+        @if (IsActive)
+        {
+            <tr>
+                <td>Shuma totale e porosisë aktive:</td>
+                <td style="font-weight:bolder; text-align:right;">@ReturnTotalinAktive()€</td>
+            </tr>        
+        }
+        
+
+    </tbody>
+</MudSimpleTable>
+
+
+@code {
+
+
+    [Parameter]
+    public string? Tavolina { get; set; }
+    [Parameter]
+    public bool IsActive { get; set; }
+
+    private IEnumerable<DetaletEFaturimit>? Orders;
+
+    protected override async Task OnInitializedAsync()
+    {
+        Orders = await new Data.GetData().GetDetaletAsync();
+    }
+
+    protected string ReturnSasiaPerProdukt(string artikulli)
+    {
+        return Orders.Where(d => d.artikulli.Equals(artikulli)).Sum(d => decimal.Parse(d.sasia)).ToString();;
+    }
+    
+    protected string ReturnTotalin()
+    {
+
+        return Orders.Where(d => d.tav.Equals(Tavolina)).Sum(d=>decimal.Parse(d.vlera)).ToString();
+    }
+    protected string ReturnTotalinAktive()
+    {
+        return Orders.Where(d=>d.tav.Equals(Tavolina)).Where(d=>!d.eshteMbyllur.Contains("x")).Sum(d=>decimal.Parse(d.vlera)).ToString();
+    }
+
+    protected void NavigateTo(string kam)
+    {
+        UriHelper.NavigateTo("/kamarieri/"+kam);
+    }
+}

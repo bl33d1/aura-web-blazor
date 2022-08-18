@@ -1,4 +1,5 @@
 using aura_web_blazor.Data;
+using Blazored.LocalStorage;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using MudBlazor.Services;
@@ -10,6 +11,7 @@ builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddSingleton<WeatherForecastService>();
 builder.Services.AddMudServices();
+builder.Services.AddBlazoredLocalStorage();
 //builder.Services.AddScoped<DialogService>();
 //builder.Services.AddScoped<NotificationService>();
 //builder.Services.AddScoped<TooltipService>();

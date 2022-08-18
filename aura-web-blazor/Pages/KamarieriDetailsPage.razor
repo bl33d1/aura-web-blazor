@@ -10,7 +10,7 @@
 <aura_web_blazor.Components.ButtonKthehuComponent></aura_web_blazor.Components.ButtonKthehuComponent>
 <br />
 
-<MudTable Striped=true Dense=true Style="font-size:small;border: 1px solid gray;" Items="@GetFaturatSipasKamarierit(@Kam)" Breakpoint="Breakpoint.None" >
+<MudTable Striped=false Dense=true Style="font-size:small;;" Items="@GetFaturatSipasKamarierit(@Kam)" Breakpoint="Breakpoint.None" >
     <HeaderContent>
         <MudTh>Produkti</MudTh>
         <MudTh>Sasia</MudTh>
@@ -21,7 +21,7 @@
     <RowTemplate>
         <MudTd >@context.artikulli</MudTd>
         <MudTd  Style="text-align:center">@context.sasia</MudTd>
-        <MudTd  Style="text-align:center">@decimal.Parse(context.vlera).ToString("0.00")</MudTd>
+        <MudTd  Style="text-align:center">@decimal.Parse(context.vlera).ToString("0.00")€</MudTd>
         <MudTd Style="text-align:center" >@context.tav <br /> @DateTime.Parse(context.ora).ToString("HH:mm:ss")</MudTd>
         <MudTd Style="text-align:right" >@context.kam</MudTd>
     </RowTemplate>

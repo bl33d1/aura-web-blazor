@@ -1,0 +1,18 @@
+﻿@using Data.Models
+@inject NavigationManager UriHelper
+
+<MudSimpleTable Elevation="2"  Style="overflow-x: auto;" Class="mb-4" >
+    <tbody>
+        <tr>
+            <td>Sasia totale e produkteve:</td>
+            <td style="font-weight:bolder; text-align:right;">@SasiaTotale</td>
+        </tr>
+    </tbody>
+</MudSimpleTable>
+
+
+@code {
+    [Parameter]
+    public string SasiaTotale { get; set; }
+
+}
