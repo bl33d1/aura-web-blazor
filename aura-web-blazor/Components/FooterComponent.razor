@@ -1,5 +1,6 @@
 ﻿@using Microsoft.JSInterop
 @inject NavigationManager UriHelper
+@inject IJSRuntime jsRuntime
 
   <footer class="footer d-flex justify-content-between" style="max-width:600px !important;background-color:@(MainColor)" id="footer">
             <div class="col-4"style="width:33%;text-align:center;">
@@ -26,9 +27,11 @@
 
     [Parameter]
     public string MainColor { get; set; }
+    public string Title { get; set; }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
+         Title = await jsRuntime.InvokeAsync<string>("getTitle");
          await JS.InvokeAsync<string>("FooterResized", DotNetObjectReference.Create(this));
     }
 

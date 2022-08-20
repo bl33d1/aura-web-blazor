@@ -5,3 +5,7 @@
     var footerElm = document.getElementById("footer");
     new ResizeObserver(padPageElement).observe(footerElm);
 }
+
+window.getTitle = () => {
+    return document.title;
+};

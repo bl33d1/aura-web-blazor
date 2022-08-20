@@ -1,19 +1,34 @@
 ﻿@using Blazored.LocalStorage
 @inherits LayoutComponentBase
 @inject NavigationManager UriHelper
+@inject IJSRuntime jsRuntime
+
 
 <PageTitle>aura-web-blazor</PageTitle>
 
 <MudThemeProvider @bind-IsDarkMode="@_isDarkMode" Theme="@_currentTheme"/>
 
 <MudLayout  Style="max-width:600px;" Class="mx-auto mt-5">
-    <MudAppBar  Elevation="1" Dense="true" >
+    <MudAppBar  Elevation="3" Dense="true" Class="" Style="min-height:70px;">
         
-             <MudButton Style="color:white;" OnClick="@(() => OpenDrawer(Anchor.Top))"><MudIcon Icon="@Icons.Material.Filled.Menu" OnClick="@(() => OpenDrawer(Anchor.Top))" Title="Favorite" /></MudButton> 
-           <MudSpacer />
-                 <MudText Style="text-align:center; margin-left:-50px; "><a style="color:white;" href="/">inTouch</a></MudText>
-           <MudSpacer />
-        
+           <table style="width:100%;margin-top:20px;    ">
+               <tr >
+                   <td width="15%" style="margin-top:50px;">
+                       <MudButton Style="color:white;" OnClick="@(() => OpenDrawer(Anchor.Top))"><MudIcon Icon="@Icons.Material.Filled.Menu" OnClick="@(() => OpenDrawer(Anchor.Top))" Title="Favorite" /></MudButton> 
+                   
+                       </td>
+                   <td colspan="2" style="margin-top:50px;">
+                       
+                       <MudText Style="text-align:center; margin-right:80px;  "><a style="color:white;" href="/">inTouch</a></MudText>
+                  
+                   </td>
+               </tr>
+               <tr >
+                   <td colspan="3"><MudText Style="color:rgba(255,255,255,0.8);text-align:center">@Title</MudText></td>
+               </tr>
+           </table>
+                   
+           
 
     </MudAppBar>
             
@@ -34,7 +49,7 @@
             <MudNavLink Icon="@Icons.Filled.Assignment" OnClick='(() => NavigateTo("/produktet"))'>Produktet e shitura</MudNavLink>
         </MudNavMenu>
         <MudNavMenu>
-            <MudNavLink Icon="@(_isDarkMode ? @Icons.Filled.LightMode : @Icons.Filled.DarkMode)" OnClick="ChangeThemeAsync">Ndrysho ne @(_isDarkMode ? "Light Mode" : "Dark Mode")</MudNavLink>
+            <MudNavLink Icon="@(_themeName != "light" ? @Icons.Filled.LightMode : @Icons.Filled.DarkMode)" OnClick="ChangeThemeAsync">Ndrysho ne @(_themeName == "light" ? "Dark Mode" : "Light Mode")</MudNavLink>
         </MudNavMenu>
     </MudDrawer>
     <MudMainContent Class="mx-3"> 
@@ -45,6 +60,11 @@
 </MudLayout>
 
 
+
+@code{
+    public string Title = "";
+    
+}
 
 @code {
 
@@ -89,12 +109,12 @@
             else
                 _themeName = "light";
             _currentTheme = _themeName == "light" ? _lightTheme : _darkTheme;
+            Title = await jsRuntime.InvokeAsync<string>("getTitle");
             StateHasChanged();
 
         }
         protected async override Task OnInitializedAsync()
         {
-
             _currentTheme = _themeName == "light" ? _lightTheme : _darkTheme;
             StateHasChanged();
         }
@@ -140,24 +160,6 @@
                 TextDisabled = "#676767",
             }
         };
-        //MudTheme _lightTheme = new MudTheme
-        //{
-        //    Palette = new Palette
-        //    {
-        //        AppbarBackground = "#3F72AF",
-        //        AppbarText = "#FFFFFF",
-        //        Primary = "#007CD1",
-        //        TextPrimary = "#0C1217",
-        //        Background = "#DBE2EF",
-        //        TextSecondary = "#0C1217",
-        //        DrawerBackground = "#FFFFFF",
-        //        DrawerText = "#0C1217",
-        //        Surface = "#F9F7F7",
-        //        ActionDefault = "#0C1217",
-        //        ActionDisabled = "#2F678C",
-        //        TextDisabled = "#676767",
-        //    }
-        //};
 
         private async Task ChangeThemeAsync()
         {

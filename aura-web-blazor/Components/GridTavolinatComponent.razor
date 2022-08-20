@@ -1,13 +1,13 @@
 ﻿@using Data.Models
 
-<MudText Align="Align.Center" Style="margin-bottom:15px;margin-top:30px; font-size:18px; font-weight:bold;">Tavolinat</MudText>
+@*<MudText Align="Align.Center" Style="margin-bottom:15px;margin-top:30px; font-size:18px; font-weight:bold;">Tavolinat</MudText>*@
 
 <MudGrid>
     <ButtonKthehuComponent></ButtonKthehuComponent>
     @foreach(var d in GetTavolinatAktive())
     {
         <MudItem xs="3">
-            <NumriTavolinesComponent NumriTavolines="@(d.Tavolina.Substring(0,1).Equals("0")? d.Tavolina.Substring(1):d.Tavolina)" KaPorosi=@d.isActive ></NumriTavolinesComponent>
+            <NumriTavolinesComponent  NumriTavolines="@(d.Tavolina.Substring(0,1).Equals("0")? d.Tavolina.Substring(1):d.Tavolina)" KaPorosi=@d.isActive ></NumriTavolinesComponent>
         </MudItem>
     }
 </MudGrid>
@@ -35,6 +35,7 @@
                                         }).ToList();
         return OrderList(tavolinat);
     }
+
 
     protected List<Tavolinat> OrderList(List<Tavolinat> tavolinat)
     {
