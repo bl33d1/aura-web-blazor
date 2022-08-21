@@ -4,17 +4,18 @@
 
   <footer class="footer d-flex justify-content-between" style="max-width:600px !important;background-color:@(MainColor)" id="footer">
             <div class="col-4"style="width:33%;text-align:center;">
-                <MudButton Style="width:100%;color:white;"   OnClick="@(() => UriHelper.NavigateTo("/tavolinat"))" >
+                <MudButton Style="width:100%;color:white; "   OnClick="@(() => NavigateTo("/tavolinat"))" >
                     <MudIcon Color="Color.Surface" Icon ="@Icons.Material.Filled.TableBar"></MudIcon>
                 </MudButton>
+                @*<MudText>@CurrentUri</MudText>*@
             </div>
             <div class="col-4" style="width:33%;text-align:center;">
-                <MudButton Style="width:100%;color:white"  OnClick="@(() => UriHelper.NavigateTo("/"))" >
+                <MudButton Style="width:100%;color:white; "  OnClick="@(() => NavigateTo("/"))" >
                     <MudIcon Color="Color.Surface" Icon ="@Icons.Material.Filled.Home"></MudIcon>
                 </MudButton>
             </div>
             <div class="col-4"style="width:33%;text-align:center;">
-                <MudButton Style="width:100%;color:white"  OnClick="@(() => UriHelper.NavigateTo("/produktet"))" >
+                <MudButton Style="width:100%;color:white; "  OnClick="@(() => NavigateTo("/produktet"))" >
                     <MudIcon Color="Color.Surface" Icon ="@Icons.Material.Filled.BarChart"></MudIcon>
                 </MudButton>
             </div>
@@ -22,18 +23,12 @@
 
 @code {
 
-
     [Inject] IJSRuntime JS { get; set; }
 
     [Parameter]
     public string MainColor { get; set; }
     public string Title { get; set; }
 
-    protected override async Task OnAfterRenderAsync(bool firstRender)
-    {
-         Title = await jsRuntime.InvokeAsync<string>("getTitle");
-         await JS.InvokeAsync<string>("FooterResized", DotNetObjectReference.Create(this));
-    }
 
     protected void NavigateTo(string page)
     {
