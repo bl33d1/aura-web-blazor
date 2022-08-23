@@ -3,7 +3,8 @@
 
 <MudTable AllowUnsorted=true Filter="new Func<Produktet,bool>(FilterFunc1)" @bind-SelectedItem="selectedItem1" Striped=false Dense=true Style="font-size:small;" Items="@Prods" Breakpoint="Breakpoint.None" >
       <ToolBarContent>
-        <MudTextField @bind-Value="searchString1" FullWidth=true Placeholder="Kerko produktin" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0 mb-2"></MudTextField>
+        <MudTextField @bind-Value="searchString1"  FullWidth=true Placeholder="Kerko produktin" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0 mb-2"></MudTextField>
+        @*<input id="searchfield" class="mt-0 mb-2" style="" @bind-value="searchString1" @bind-value:event="oninput" type="text" placeholder="Kerko produktin"/>*@
         <MudSpacer />
     </ToolBarContent>
     <HeaderContent>

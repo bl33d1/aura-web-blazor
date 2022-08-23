@@ -8,6 +8,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="wwwroot\css\service-worker.js" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="Styles\" />
   </ItemGroup>
 

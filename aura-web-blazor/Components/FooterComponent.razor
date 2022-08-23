@@ -2,7 +2,7 @@
 @inject NavigationManager UriHelper
 @inject IJSRuntime jsRuntime
 
-  <footer class="footer d-flex justify-content-between" style="max-width:600px !important;background-color:@(MainColor)" id="footer">
+  <footer class="footer d-flex justify-content-between" style="max-width:600px !important;min-height:45px;background-color:@(MainColor)" id="footer">
             <div class="col-4"style="width:33%;text-align:center;">
                 <MudButton Style="width:100%;color:white; "   OnClick="@(() => NavigateTo("/tavolinat"))" >
                     <MudIcon Color="Color.Surface" Icon ="@Icons.Material.Filled.TableBar"></MudIcon>

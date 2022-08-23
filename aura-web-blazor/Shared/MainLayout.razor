@@ -6,6 +6,7 @@
 
 <PageTitle>aura-web-blazor</PageTitle>
 
+
 <MudThemeProvider @bind-IsDarkMode="@_isDarkMode" Theme="@_currentTheme"/>
 
 <MudLayout  Style="max-width:600px;" Class="mx-auto mt-5">
@@ -14,13 +15,16 @@
     <table style="width:100%;margin-top:20px;    ">
         <tr >
             <td width="15%" style="margin-top:50px;">
-                <MudButton Style="color:white;" OnClick="@(() => OpenDrawer(Anchor.Top))"><MudIcon Icon="@Icons.Material.Filled.Menu" OnClick="@(() => OpenDrawer(Anchor.Top))" Title="Favorite" /></MudButton> 
+                <MudButton Style="color:white;" OnClick="@(() => OpenDrawer(Anchor.Top))"><MudIcon Icon="@Icons.Material.Filled.Menu"  Title="Menu" /></MudButton> 
                    
                 </td>
-            <td colspan="2" style="margin-top:50px;">
+            <td width="70%" style="margin-top:50px; text-align:center">
                        
-                <MudText Style="text-align:center; margin-right:80px;  "><a style="color:white;" href="/">inTouch</a></MudText>
+                <MudButton Style="text-align:center"><MudText Style="text-align:center;"><a style="color:white;" href="/">inTouch</a></MudText></MudButton>
                   
+            </td>
+            <td width="15%">
+                <a @onclick="()=>RefreshPage()" @onclick:preventDefault><MudButton><MudIcon Style="color:white" Icon="@Icons.Material.Filled.Refresh"></MudIcon></MudButton></a>
             </td>
         </tr>
         <tr >
@@ -60,10 +64,18 @@
 </MudLayout>
 
 
+@code{
+    void RefreshPage()
+    {
+        UriHelper.NavigateTo(UriHelper.BaseUri,forceLoad:true);
+    }
+}
+
 
 @code{
     public string Title = "";
-    
+
+
 }
 
 @code {
@@ -104,17 +116,16 @@
 
         protected async override Task OnAfterRenderAsync(bool firstTime)
         {
+            Title = await jsRuntime.InvokeAsync<string>("getTitle");
+            StateHasChanged();
+        }
+        protected async override Task OnInitializedAsync()
+        {
+            _currentTheme = _themeName == "light" ? _lightTheme : _darkTheme;
             if (await LocalStorage.ContainKeyAsync("theme"))
                 _themeName = await LocalStorage.GetItemAsStringAsync("theme");
             else
                 _themeName = "light";
-            _currentTheme = _themeName == "light" ? _lightTheme : _darkTheme;
-            Title = await jsRuntime.InvokeAsync<string>("getTitle");
-            StateHasChanged();
-
-        }
-        protected async override Task OnInitializedAsync()
-        {
             _currentTheme = _themeName == "light" ? _lightTheme : _darkTheme;
             StateHasChanged();
         }
@@ -138,7 +149,8 @@
                 Surface = "#393E46",
                 ActionDefault = "#0C1217",
                 ActionDisabled = "#2F678C",
-                TextDisabled = "#B0B0B0"
+                TextDisabled = "#B0B0B0",
+                TableLines = "#5E636D"
             }
         };
         
