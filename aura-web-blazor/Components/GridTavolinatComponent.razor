@@ -6,7 +6,7 @@
     <ButtonKthehuComponent></ButtonKthehuComponent>
     @foreach(var d in GetTavolinatAktive())
     {
-        <MudItem xs="3">
+        <MudItem xs="3"  Class="rounded-lg">
             <NumriTavolinesComponent  NumriTavolines="@(d.Tavolina.Substring(0,1).Equals("0")? d.Tavolina.Substring(1):d.Tavolina)" KaPorosi=@d.isActive ></NumriTavolinesComponent>
         </MudItem>
     }

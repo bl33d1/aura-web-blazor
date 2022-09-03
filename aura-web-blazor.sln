@@ -5,6 +5,10 @@ VisualStudioVersion = 17.2.32526.322
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "aura-web-blazor", "aura-web-blazor\aura-web-blazor.csproj", "{042B1D13-05B6-48C8-B503-F9B2137132D4}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "aura-web-api", "aura-web-api\aura-web-api.csproj", "{70D24200-9E56-4D59-88E5-9CDA03572C20}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "aura-web-api-client", "aura-web-api-client\aura-web-api-client.csproj", "{8A5FC9F3-4C1E-4FA3-9A22-99E0EA573C80}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{042B1D13-05B6-48C8-B503-F9B2137132D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{042B1D13-05B6-48C8-B503-F9B2137132D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{042B1D13-05B6-48C8-B503-F9B2137132D4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{70D24200-9E56-4D59-88E5-9CDA03572C20}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{70D24200-9E56-4D59-88E5-9CDA03572C20}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{70D24200-9E56-4D59-88E5-9CDA03572C20}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{70D24200-9E56-4D59-88E5-9CDA03572C20}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8A5FC9F3-4C1E-4FA3-9A22-99E0EA573C80}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8A5FC9F3-4C1E-4FA3-9A22-99E0EA573C80}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8A5FC9F3-4C1E-4FA3-9A22-99E0EA573C80}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8A5FC9F3-4C1E-4FA3-9A22-99E0EA573C80}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
