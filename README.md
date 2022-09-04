@@ -25,7 +25,7 @@ I'm currently updating the app to work as a WebAssembly app (currently works Ser
 - .NET Framework 4.8 for creating console apps on the client side and server side to allow communication via WebSocket programming
 
 
-## Diagram on how the architecture works
+## Architecture Diagram
 
 To help decipher the below diagram:
 
