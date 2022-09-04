@@ -39,7 +39,8 @@ Whenever the user wants to connect to one of the databases, a reverse proxy is s
 
 ![aura-architecture](https://user-images.githubusercontent.com/13669142/188190971-d107b6f3-ef8a-4c9d-ba85-4713566e2918.png)
 
-
+## New architecture with Rest API
+![image](https://user-images.githubusercontent.com/13669142/188333839-c59b3973-71a3-4ece-ac1b-76292bb3c1f6.png)
 
 ## [Check out 'aura' live here](https://blazor.intouch-ks.com/)
 
