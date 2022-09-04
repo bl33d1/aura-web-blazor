@@ -2,6 +2,7 @@
 
 namespace aura_web_api.Models
 {
+    [System.ComponentModel.DataAnnotations.Schema.Table("forum")]
     public class Order
     {
         public int Id { get; set; }

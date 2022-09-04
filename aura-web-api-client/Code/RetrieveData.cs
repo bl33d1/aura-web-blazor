@@ -15,12 +15,15 @@ namespace aura_web_api_client.Code
         private static readonly HttpClient client = new HttpClient();
 
         public List<Model.Order> detaletFaturimit;
+
         string connString = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=C:\\Users\\bledi\\Desktop\\kohaa\\b1.mdb;User Id=;Password=;";
+
         string query4444a = @"SELECT DISTINCTROW tblprodukti.strartikulli, [tbldetalet e faturimit].sasia, [tbldetalet e faturimit].qmimishites, [qmimishites]*[sasia] AS Expr1, tblprodukti.nj2, tblUser.UserPassword, [tbldetalet e faturimit].ora, [tbldetalet e faturimit].Data, [tbldetalet e faturimit].Adresa, [tbldetalet e faturimit].marzha, [tbldetalet e faturimit].Blersi, [tbldetalet e faturimit].isTransfered
 FROM tblprodukti INNER JOIN (tblUser INNER JOIN [tbldetalet e faturimit] ON tblUser.UserName = [tbldetalet e faturimit].kam) ON tblprodukti.pkeyProductID = [tbldetalet e faturimit].fkeyProductID
 WHERE ((([tbldetalet e faturimit].isTransfered)=No));";
 
         string queryUpdateTransfered = @"UPDATE 44a SET [44a].isTransfered = Yes;";
+
         
         public void GetOrdersFromDB()
         {
@@ -38,17 +41,17 @@ WHERE ((([tbldetalet e faturimit].isTransfered)=No));";
                         //getting all the lines from db and adding to list for easier access
                         detaletFaturimit.Add(new Model.Order()
                         {
-                            artikulli = reader.GetValue(0).ToString(),
-                            sasia = int.Parse(reader.GetValue(1).ToString()),
-                            qmimi = decimal.Parse(reader.GetValue(2).ToString()),
-                            vlera = decimal.Parse(reader.GetValue(3).ToString()),
-                            nj2 = char.Parse(reader.GetValue(4).ToString()),
-                            kamarieri = reader.GetValue(5).ToString(),
-                            ora = DateTime.Parse(reader.GetValue(6).ToString()),
-                            data = DateTime.Parse(reader.GetValue(7).ToString()),
-                            tavolina = reader.GetValue(8).ToString(),
-                            nrPorosise = reader.GetValue(9).ToString(),
-                            eshteMbyllur = reader.GetValue(10).ToString()
+                            Artikulli = reader.GetValue(0).ToString(),
+                            Sasia = int.Parse(reader.GetValue(1).ToString()),
+                            Qmimi = decimal.Parse(reader.GetValue(2).ToString()),
+                            Vlera = decimal.Parse(reader.GetValue(3).ToString()),
+                            Nj2 = char.Parse(reader.GetValue(4).ToString()),
+                            Kamarieri = reader.GetValue(5).ToString(),
+                            Ora = DateTime.Parse(reader.GetValue(6).ToString()),
+                            Data = DateTime.Parse(reader.GetValue(7).ToString()),
+                            Tavolina = reader.GetValue(8).ToString(),
+                            NrPorosise = reader.GetValue(9).ToString(),
+                            EshteMbyllur = reader.GetValue(10).ToString()
                         });
 
                     }
@@ -62,7 +65,7 @@ WHERE ((([tbldetalet e faturimit].isTransfered)=No));";
             {
                 //TO
                 Console.WriteLine(e.Message);
-                Console.ReadLine();
+                //Console.ReadLine();
                 return;
             }
 
@@ -73,7 +76,7 @@ WHERE ((([tbldetalet e faturimit].isTransfered)=No));";
             //{
             //    Console.WriteLine(x.Artikulli + ": " + x.Nj2);
             //}
-            Console.ReadLine();
+            //Console.ReadLine();
         }
 
         public async void SendPost(List<Model.Order> orders)
