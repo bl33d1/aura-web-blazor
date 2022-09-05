@@ -1,12 +1,15 @@
 ﻿@using Data.Models
+@using aura_web_blazor.Services
+@inject IOrderService OrderService
 @inject NavigationManager UriHelper
+
 
 <MudSimpleTable Elevation="0"  Style="overflow-x: auto; padding-bottom:0px" >
 
     <tbody>
         <tr>
             <td>Numri porosive:</td>
-            <td style="font-weight:bolder; text-align:right;">@Orders.Where(d=>d.kam.Equals(Kamarieri)).Count().ToString()</td>
+            <td style="font-weight:bolder; text-align:right;">@Orders.Where(d=>d.Kamarieri.Equals(Kamarieri)).Count().ToString()</td>
         </tr>
         <tr>
             <td>Porosia e parë:</td>
@@ -34,22 +37,22 @@
 
     protected override async Task OnInitializedAsync()
     {
-        Orders = await new Data.GetData().GetDetaletAsync();
+        Orders = (await OrderService.GetOrders()).ToList();
     }
 
-    protected string ReturnSasiaPerProdukt(string artikulli)
+    protected string ReturnSasiaPerProdukt(string Artikulli)
     {
-        return Orders.Where(d => d.artikulli.Equals(artikulli)).Sum(d => decimal.Parse(d.sasia)).ToString();;
+        return Orders.Where(d => d.Artikulli.Equals(Artikulli)).Sum(d => int.Parse(d.Sasia)).ToString();;
     }
 
     protected string ReturnPorosiaPareFundit(string pareFundit)
     {
 
-        return pareFundit.Equals("fundit") ? Orders.Where(d => d.kam.Equals(Kamarieri)).Max(d => d.ora).ToString() : Orders.Where(d => d.kam.Equals(Kamarieri)).Min(d => d.ora).ToString() ;
+        return pareFundit.Equals("fundit") ? Orders.Where(d => d.Kamarieri.Equals(Kamarieri)).Max(d => d.Ora).ToString() : Orders.Where(d => d.Kamarieri.Equals(Kamarieri)).Min(d => d.Ora).ToString() ;
     }
 
-    protected void NavigateTo(string kam)
+    protected void NavigateTo(string Kamarieri)
     {
-        UriHelper.NavigateTo("/kamarieri/"+kam);
+        UriHelper.NavigateTo("/kamarieri/"+Kamarieri);
     }
 }

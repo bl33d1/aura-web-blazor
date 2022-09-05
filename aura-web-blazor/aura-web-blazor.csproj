@@ -17,7 +17,11 @@
 
   <ItemGroup>
     <PackageReference Include="Blazored.LocalStorage" Version="4.2.0" />
+    <PackageReference Include="Json.Net" Version="1.0.33" />
     <PackageReference Include="MudBlazor" Version="6.0.14" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.2-beta2" />
   </ItemGroup>
+
+  <Import Project="..\aura-shared\aura-shared.projitems" Label="Shared" />
 
 </Project>

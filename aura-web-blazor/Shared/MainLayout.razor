@@ -1,7 +1,10 @@
 ﻿@using Blazored.LocalStorage
+@using Services
+@using Data.Models
 @inherits LayoutComponentBase
 @inject NavigationManager UriHelper
 @inject IJSRuntime jsRuntime
+@inject IOrderService OrderService
 
 
 <PageTitle>aura-web-blazor</PageTitle>
@@ -12,7 +15,7 @@
 <MudLayout  Style="max-width:600px;" Class="mx-auto mt-5">
     <MudAppBar   Elevation="3" Dense="true"  Style="min-height:70px;">
     
-         <MudGrid Spacing=@(0) Class="mt-3 " Justify="Justify.Center">
+         <MudGrid Spacing=@(0) Class="mt-3 " style="max-width:600px" Justify="Justify.Center">
             <MudItem xs="4" Style="text-align:left;height:100%">
                 <MudButton Style="color:white;width:100%;height:100%;"  OnClick="@(() => OpenDrawer(Anchor.Left))"><MudIcon Icon="@Icons.Material.Filled.Menu"  Style="text-align:left" Title="Menu" /></MudButton> 
             </MudItem>
@@ -75,6 +78,44 @@
     <aura_web_blazor.Components.FooterComponent MainColor="@(_themeName == "light" ?   appBarColorLight :"#393E46")"/>
 </MudLayout>
 
+@code{
+    private static System.Timers.Timer _timer;
+    private int _counter = 60;
+
+    private IEnumerable<DetaletEFaturimit>? Orders;
+
+   
+        
+    protected override void OnInitialized()
+    {
+        _timer = new System.Timers.Timer(1000);
+        _timer.Elapsed += CountDownTimer;
+        _timer.Enabled = true;
+        
+    }
+    public async void CountDownTimer(Object source, System.Timers.ElapsedEventArgs e)
+    {
+        if (_counter > 0)
+        {
+            _counter -= 1;
+        }
+        else
+        {
+            _timer.Enabled = false;
+        }
+
+        await InvokeAsync(async () =>
+        {
+            StateHasChanged();
+            Orders = (await OrderService.GetOrders()).ToList();
+        });
+    }
+
+    public void Dispose()
+    {
+        _timer?.Dispose();
+    }
+}
 
 @code{
     void RefreshPage()

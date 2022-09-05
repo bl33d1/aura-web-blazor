@@ -1,12 +1,13 @@
 ﻿@using Data.Models
 @inject NavigationManager UriHelper
-
+@using aura_web_blazor.Services
+@inject IOrderService OrderService
 <MudSimpleTable Elevation="2"  Style="overflow-x: auto;" Class="mb-4" >
 
     <tbody>
         <tr>
             <td>Numri total i porosive:</td>
-            <td style="font-weight:bolder; text-align:right;">@Orders.Where(d=>d.tav.Equals(Tavolina)).Count().ToString()</td>
+            <td style="font-weight:bolder; text-align:right;">@Orders.Where(d=>d.Tavolina.Equals(Tavolina)).Count().ToString()</td>
         </tr>
         <tr>
             <td>Shuma totale e porosive:</td>
@@ -37,26 +38,26 @@
 
     protected override async Task OnInitializedAsync()
     {
-        Orders = await new Data.GetData().GetDetaletAsync();
+        Orders = (await OrderService.GetOrders()).ToList();
     }
 
-    protected string ReturnSasiaPerProdukt(string artikulli)
+    protected string ReturnSasiaPerProdukt(string Artikulli)
     {
-        return Orders.Where(d => d.artikulli.Equals(artikulli)).Sum(d => decimal.Parse(d.sasia)).ToString();;
+        return Orders.Where(d => d.Artikulli.Equals(Artikulli)).Sum(d => int.Parse(d.Sasia)).ToString();;
     }
     
     protected string ReturnTotalin()
     {
 
-        return Orders.Where(d => d.tav.Equals(Tavolina)).Sum(d=>decimal.Parse(d.vlera)).ToString();
+        return Orders.Where(d => d.Tavolina.Equals(Tavolina)).Sum(d => decimal.Parse(d.Vlera)).ToString();
     }
     protected string ReturnTotalinAktive()
     {
-        return Orders.Where(d=>d.tav.Equals(Tavolina)).Where(d=>!d.eshteMbyllur.Contains("x")).Sum(d=>decimal.Parse(d.vlera)).ToString();
+        return Orders.Where(d=>d.Tavolina.Equals(Tavolina)).Where(d=>!d.EshteMbyllur.Contains("x")).Sum(d => decimal.Parse(d.Vlera)).ToString();
     }
 
-    protected void NavigateTo(string kam)
+    protected void NavigateTo(string Kamarieri)
     {
-        UriHelper.NavigateTo("/kamarieri/"+kam);
+        UriHelper.NavigateTo("/kamarieri/"+Kamarieri);
     }
 }

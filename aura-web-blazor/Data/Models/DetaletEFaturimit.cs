@@ -2,23 +2,32 @@
 {
     public class DetaletEFaturimit
     {
-        public string artikulli { get; set; }
-        public string sasia { get; set; }
-        public string nj2 { get; set; }
-        public string qmimi { get; set; }
-        public string password { get; set; }
-        public string kam { get; set; }
-        public string ora { get; set; }
-        public string data { get; set; }
-        public string tav { get; set; }
-        public string vlera { get; set; }
-        public string nrPorosise { get; set; }
-        public string eshteMbyllur { get; set; }
+        public int Id { get; set; }
+        public string Artikulli { get; set; }
+        public string Sasia { get; set; }
+        public char Nj2 { get; set; }
+        public string Qmimi { get; set; }
+        public string Kamarieri { get; set; }
+        public string Ora { get; set; }
+        public string Data { get; set; }
+        public string Tavolina { get; set; }
+        public string Vlera { get; set; }
+        public string NrPorosise { get; set; }
+        public string EshteMbyllur { get; set; }
+        //public string Artikulli { get; set; }
+        //public string Sasia { get; set; }
+        //public string Nj2 { get; set; }
+        //public string Qmimi { get; set; }
+        //public string password { get; set; }
+        //public string Kamarieri { get; set; }
+        //public string Ora { get; set; }
+        //public string data { get; set; }
+        //public string Tavolina { get; set; }
+        //public string Vlera { get; set; }
+        //public string NrPorosise { get; set; }
+        //public string EshteMbyllur { get; set; }
 
 
-        override public string ToString()
-        {
-            return $"\n \"artikulli\": \"{artikulli}\",\n  \"sasia\": \"{sasia}\",\n \"qmimi\": \"{qmimi}\",\n \"vlera\": \"{vlera}\",\n \"nj2\": \"{nj2}\",\n  \"password\": \"{password}\",\n  \"kam\": \"{kam}\",\n  \"ora\": \"{ora}\",\n  \"data\": \"{data}\",\n  \"tav\": \"{tav}\",\n  \"nrPorosise\": \"{nrPorosise}\",\n  \"eshteMbyllur\": \"{eshteMbyllur}\",\n";
-        }
+        
     }
 }

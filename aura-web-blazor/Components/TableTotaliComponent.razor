@@ -9,7 +9,7 @@
         </tr>
         <tr>
             <td>Totali ditor:</td>
-            <td style="font-weight:bolder; font-size:17.5px;text-align:right;">@Orders.Sum(d=> decimal.Parse(d.vlera)).ToString(".00")€</td>
+            <td style="font-weight:bolder; font-size:17.5px;text-align:right;">@Orders.Sum(d=> decimal.Parse(d.Vlera)).ToString(".00")€</td>
         </tr>
         <tr>
             <td>Rush hour:</td>
@@ -35,15 +35,15 @@
         Orders = await new Data.GetData().GetDetaletAsync();
     }
 
-    protected string ReturnSasiaPerProdukt(string artikulli)
+    protected string ReturnSasiaPerProdukt(string Artikulli)
     {
-        return Orders.Where(d => d.artikulli.Equals(artikulli)).Sum(d => decimal.Parse(d.sasia)).ToString();;
+        return Orders.Where(d => d.Artikulli.Equals(Artikulli)).Sum(d => int.Parse(d.Sasia)).ToString();;
     }
 
     protected string ReturnParadite(string paraPas)
     {
-        if(paraPas.Equals("para")) return Orders.Where(d => DateTime.Parse(d.ora).Hour < 15).Sum(d => decimal.Parse(d.vlera)).ToString(".00");
-        else return Orders.Where(d => DateTime.Parse(d.ora).Hour > 15).Sum(d => decimal.Parse(d.vlera)).ToString(".00");
+        if(paraPas.Equals("para")) return Orders.Where(d => DateTime.Parse(d.Ora).Hour < 15).Sum(d => decimal.Parse(d.Vlera)).ToString(".00");
+        else return Orders.Where(d => DateTime.Parse(d.Ora).Hour > 15).Sum(d => decimal.Parse(d.Vlera)).ToString(".00");
 
     }
 
@@ -52,12 +52,12 @@
     {
         //return "13:00";
         List<OraModel> query = (from d in Orders
-                                group d by DateTime.Parse(d.ora).Hour
+                                group d by DateTime.Parse(d.Ora).Hour
                         into grp
                                 select new OraModel()
                         {
                             Ora = grp.Key,
-                            Vlera = grp.Sum(d => decimal.Parse(d.vlera)),
+                            Vlera = grp.Sum(d => decimal.Parse(d.Vlera)),
                         }).OrderBy(d => d.Ora).ToList();
         return query.Max(d => d.Ora).ToString() + ":00" ;
     }

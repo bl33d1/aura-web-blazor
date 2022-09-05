@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Net.Http;
 using Newtonsoft.Json;
+using aura_shared.Models;
 
 namespace aura_web_api_client.Code
 {
@@ -14,7 +15,7 @@ namespace aura_web_api_client.Code
 
         private static readonly HttpClient client = new HttpClient();
 
-        public List<Model.Order> detaletFaturimit;
+        public List<Order> detaletFaturimit;
 
         string connString = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=C:\\Users\\bledi\\Desktop\\kohaa\\b1.mdb;User Id=;Password=;";
 
@@ -35,11 +36,11 @@ WHERE ((([tbldetalet e faturimit].isTransfered)=No));";
                     OleDbCommand command = new OleDbCommand(query4444a, connection);
                     OleDbDataReader reader = command.ExecuteReader();
                     if (!reader.HasRows) return;
-                    detaletFaturimit = new List<Model.Order>();
+                    detaletFaturimit = new List<Order>();
                      while (reader.Read())
                     {
                         //getting all the lines from db and adding to list for easier access
-                        detaletFaturimit.Add(new Model.Order()
+                        detaletFaturimit.Add(new Order()
                         {
                             Artikulli = reader.GetValue(0).ToString(),
                             Sasia = int.Parse(reader.GetValue(1).ToString()),
@@ -47,8 +48,8 @@ WHERE ((([tbldetalet e faturimit].isTransfered)=No));";
                             Vlera = decimal.Parse(reader.GetValue(3).ToString()),
                             Nj2 = char.Parse(reader.GetValue(4).ToString()),
                             Kamarieri = reader.GetValue(5).ToString(),
-                            Ora = DateTime.Parse(reader.GetValue(6).ToString()),
-                            Data = DateTime.Parse(reader.GetValue(7).ToString()),
+                            Ora = reader.GetValue(6).ToString(),
+                            Data = reader.GetValue(7).ToString(),
                             Tavolina = reader.GetValue(8).ToString(),
                             NrPorosise = reader.GetValue(9).ToString(),
                             EshteMbyllur = reader.GetValue(10).ToString()
@@ -79,7 +80,7 @@ WHERE ((([tbldetalet e faturimit].isTransfered)=No));";
             //Console.ReadLine();
         }
 
-        public async void SendPost(List<Model.Order> orders)
+        public async void SendPost(List<Order> orders)
         {
             var content = JsonConvert.SerializeObject(orders, Formatting.Indented);
 

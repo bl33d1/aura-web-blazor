@@ -1,5 +1,5 @@
 ﻿using aura_web_api.Data;
-using aura_web_api.Models;
+using aura_shared.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
@@ -48,7 +48,7 @@ namespace aura_web_api.Controllers
         //    return changed == 0 ? NotFound() : Ok(company);
         //}
         [HttpPost("{company}")]
-        public IActionResult CreateList(string company, List<Order> orders)
+        public async Task<IActionResult> CreateList(string company, List<Order> orders)
         {
             int changes = 0;
             conn.Open();
@@ -71,7 +71,7 @@ namespace aura_web_api.Controllers
                     cmd.Parameters.AddWithValue("@Vlera", x.Vlera);
                     cmd.Parameters.AddWithValue("@NrPorosise", x.NrPorosise);
                     cmd.Parameters.AddWithValue("@EshteMbyllur", x.EshteMbyllur);
-                    changes = cmd.ExecuteNonQuery();
+                    changes = await cmd.ExecuteNonQueryAsync();
                     cmd.Parameters.Clear();
                 }
                 conn.Close();

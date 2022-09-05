@@ -1,5 +1,5 @@
 using aura_web_api.Data;
-using aura_web_api.Models;
+using aura_shared.Models;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);

@@ -1,8 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
 
-namespace aura_web_api.Models
+namespace aura_shared.Models
 {
-    [System.ComponentModel.DataAnnotations.Schema.Table("forum")]
     public class Order
     {
         public int Id { get; set; }
@@ -18,7 +19,4 @@ namespace aura_web_api.Models
         public string NrPorosise { get; set; }
         public string EshteMbyllur { get; set; }
     }
-
-   
-
 }

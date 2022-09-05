@@ -1,5 +1,8 @@
 ﻿@using Data.Models
 @using aura_web_blazor.Components
+@using Services
+@inject IOrderService OrderService;
+
 @page "/"
 
 <PageTitle>Pazari Ditor</PageTitle>
@@ -31,11 +34,10 @@
 <br>
 
 @code{
-
-    private IEnumerable<DetaletEFaturimit>? Orders;
+    public IEnumerable<DetaletEFaturimit> Orders { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
-        Orders = await new Data.GetData().GetDetaletAsync();
+        Orders = (await OrderService.GetOrders()).ToList();
     }
 }

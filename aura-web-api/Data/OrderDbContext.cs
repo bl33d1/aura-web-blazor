@@ -1,4 +1,4 @@
-﻿using aura_web_api.Models;
+﻿using aura_shared.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace aura_web_api.Data

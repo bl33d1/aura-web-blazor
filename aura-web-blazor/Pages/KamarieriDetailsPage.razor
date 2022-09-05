@@ -1,7 +1,8 @@
-﻿@page "/kamarieri/{kam}"
+﻿@page "/kamarieri/{Kamarieri}"
+@using Services;
 @using Data.Models
-
-<PageTitle>Detajet per: @Kam</PageTitle>
+@inject IOrderService OrderService;
+<PageTitle>Detajet per: @Kamarieri</PageTitle>
 @*
 <MudText Align="Align.Center" Style="margin-bottom:15px;margin-top:30px; font-size:16px; font-weight:bold;">Faturat e kamarierit:</MudText>
 <MudText Align="Align.Center" Style="margin-bottom:15px;margin-top:10px; font-size:18px; font-weight:bold;">@Kam</MudText>*@
@@ -10,7 +11,7 @@
 <aura_web_blazor.Components.ButtonKthehuComponent></aura_web_blazor.Components.ButtonKthehuComponent>
 <br />
 
-<MudTable Striped=false Dense=true Style="font-size:small;;" Items="@GetFaturatSipasKamarierit(@Kam)" Breakpoint="Breakpoint.None" >
+<MudTable Striped=false Dense=true Style="font-size:small;;" Items="@GetFaturatSipasKamarierit(@Kamarieri)" Breakpoint="Breakpoint.None" >
     <HeaderContent>
         <MudTh>Produkti</MudTh>
         <MudTh>Sasia</MudTh>
@@ -19,30 +20,39 @@
         <MudTh>Kamarieri</MudTh>
     </HeaderContent>
     <RowTemplate>
-        <MudTd >@context.artikulli</MudTd>
-        <MudTd  Style="text-align:center">@context.sasia</MudTd>
-        <MudTd  Style="text-align:center">@decimal.Parse(context.vlera).ToString("0.00")€</MudTd>
-        <MudTd Style="text-align:center" >@context.tav <br /> @DateTime.Parse(context.ora).ToString("HH:mm:ss")</MudTd>
-        <MudTd Style="text-align:right" >@context.kam</MudTd>
+        <MudTd >@context.Artikulli</MudTd>
+        <MudTd  Style="text-align:center">@context.Sasia</MudTd>
+        <MudTd  Style="text-align:center">@decimal.Parse(context.Vlera).ToString("0.00")€</MudTd>
+        <MudTd Style="text-align:center" >@context.Tavolina <br /> @DateTime.Parse(context.Ora).ToString("HH:mm:ss")</MudTd>
+        <MudTd Style="text-align:right" >@context.Kamarieri</MudTd>
     </RowTemplate>
 </MudTable>
 
 @code {
     [Parameter]
-    public string? Kam { get; set; }
+    public string? Kamarieri { get; set; }
 
-    private IEnumerable<DetaletEFaturimit>? Orders;
+    //private IEnumerable<DetaletEFaturimit>? Orders;
+
+    //protected override async Task OnInitializedAsync()
+    //{
+    //    Orders = await new Data.GetData().GetDetaletAsync();
+    //
+    public IEnumerable<DetaletEFaturimit> Orders { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        Orders = (await OrderService.GetOrders()).ToList();
+    }
+
 
     [Parameter]
     public bool TakeAll { get; set; }
 
-    protected override async Task OnInitializedAsync()
-    {
-        Orders = await new Data.GetData().GetDetaletAsync();
-    }
+    
 
-    protected IEnumerable<DetaletEFaturimit> GetFaturatSipasKamarierit(string kam)
+    protected IEnumerable<DetaletEFaturimit> GetFaturatSipasKamarierit(string Kama)
     {
-        return Orders.Where(d=>d.kam.Equals(kam)).OrderByDescending(d => DateTime.Parse(d.ora));
+        return Orders.Where(d=>d.Kamarieri.Equals(Kama)).OrderByDescending(d => DateTime.Parse(d.Ora));
     }
 }

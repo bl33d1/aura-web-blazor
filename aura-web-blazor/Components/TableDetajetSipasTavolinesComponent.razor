@@ -1,5 +1,7 @@
 ﻿@using aura_web_blazor.Components
 @using Data.Models
+@using aura_web_blazor.Services
+@inject IOrderService OrderService
 @inject NavigationManager UriHelper 
 @*<MudText Align="Align.Center" Style="margin-bottom:15px;margin-top:30px; font-size:16px; font-weight:bold;">Faturat e fundit</MudText>*@
 
@@ -15,10 +17,10 @@
         <MudTh Style="font-weight:bold">Kamarieri</MudTh>
     </HeaderContent>
     <RowTemplate>
-        <MudTd Style="text-align:left" >@context.artikulli</MudTd>
-        <MudTd Style="text-align:center">@context.sasia</MudTd>
-        <MudTd Style="text-align:center">@context.vlera€</MudTd>
-        <MudTd Style="text-align:center">@context.kam <br /> @DateTime.Parse(context.ora).ToString("HH:mm:ss")</MudTd>
+        <MudTd Style="text-align:left" >@context.Artikulli</MudTd>
+        <MudTd Style="text-align:center">@context.Sasia</MudTd>
+        <MudTd Style="text-align:center">@context.Vlera€</MudTd>
+        <MudTd Style="text-align:center">@context.Kamarieri <br /> @DateTime.Parse(context.Ora).ToString("HH:mm:ss")</MudTd>
     </RowTemplate>
 </MudTable>
 
@@ -38,15 +40,15 @@
 
     protected override async Task OnInitializedAsync()
     {
-        Orders = await new Data.GetData().GetDetaletAsync();
+        Orders = (await OrderService.GetOrders()).ToList();
     }
 
     protected IEnumerable<DetaletEFaturimit> GetFaturat(bool aktive)
     {
         if(aktive)
-         return Orders.Where(d=>d.tav.Equals(Tavolina)).Where(d=>d.eshteMbyllur.Equals(d.tav)).OrderByDescending(d => DateTime.Parse(d.ora));
+         return Orders.Where(d=>d.Tavolina.Equals(Tavolina)).Where(d=>d.EshteMbyllur.Equals(d.Tavolina)).OrderByDescending(d => DateTime.Parse(d.Ora));
         else
-         return Orders.Where(d=>d.tav.Equals(Tavolina)).Where(d=>d.eshteMbyllur.Equals("x") ||d.eshteMbyllur.Equals("X") ).OrderByDescending(d => DateTime.Parse(d.ora));
+         return Orders.Where(d=>d.Tavolina.Equals(Tavolina)).Where(d=>d.EshteMbyllur.Equals("x") ||d.EshteMbyllur.Equals("X") ).OrderByDescending(d => DateTime.Parse(d.Ora));
     }
 
         private bool FilterFunc1(DetaletEFaturimit element) => FilterFunc(element, searchString1);
@@ -55,7 +57,7 @@
     {
         if (string.IsNullOrWhiteSpace(searchString))
             return true;
-        if (element.kam.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+        if (element.Kamarieri.Contains(searchString, StringComparison.OrdinalIgnoreCase))
             return true;
         return false;
     }

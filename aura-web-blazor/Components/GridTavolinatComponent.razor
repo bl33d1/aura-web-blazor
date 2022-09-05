@@ -1,4 +1,6 @@
 ﻿@using Data.Models
+@using aura_web_blazor.Services
+@inject IOrderService OrderService
 
 @*<MudText Align="Align.Center" Style="margin-bottom:15px;margin-top:30px; font-size:18px; font-weight:bold;">Tavolinat</MudText>*@
 
@@ -17,7 +19,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        Orders = await new Data.GetData().GetDetaletAsync();
+        Orders = (await OrderService.GetOrders()).ToList();
     }
 
 
@@ -26,12 +28,12 @@
         List<Tavolinat> tavolinat = (from d in Orders
                                      group d by new
                                      {
-                                         d.tav
+                                         d.Tavolina
                                      } into grp
                                      select new Tavolinat
                                         {
-                                            Tavolina = grp.Key.tav,
-                                            isActive = (grp.GroupBy(p=> p.eshteMbyllur).Count() == 1) && ((grp.Select(d=> d.eshteMbyllur).First().Equals("x")) || (grp.Select(d=> d.eshteMbyllur).First().Equals("X"))) ? false : true,
+                                            Tavolina = grp.Key.Tavolina,
+                                            isActive = (grp.GroupBy(p=> p.EshteMbyllur).Count() == 1) && ((grp.Select(d=> d.EshteMbyllur).First().Equals("x")) || (grp.Select(d=> d.EshteMbyllur).First().Equals("X"))) ? false : true,
                                         }).ToList();
         return OrderList(tavolinat);
     }
@@ -41,15 +43,15 @@
     {
         List<Tavolinat> ordered = new List<Tavolinat>();
         string edited = "";
-        foreach(var tav in tavolinat)
+        foreach(var Tavolina in tavolinat)
         {
-            if(tav.Tavolina.Length == 1)
+            if(Tavolina.Tavolina.Length == 1)
             {
-                edited = "0" + tav.Tavolina;
-                ordered.Add(new Tavolinat(edited,tav.isActive));
+                edited = "0" + Tavolina.Tavolina;
+                ordered.Add(new Tavolinat(edited,Tavolina.isActive));
                 continue;
             }
-            ordered.Add(tav);
+            ordered.Add(Tavolina);
         }
 
         ordered = ordered.OrderBy(p => p.Tavolina).OrderByDescending(d=>d.isActive).ToList();

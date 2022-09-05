@@ -1,4 +1,7 @@
 ﻿@using Data.Models
+@using aura_web_blazor.Services
+@inject IOrderService OrderService
+
 <MudText  Align="Align.Center" Style="margin-bottom:15px; font-size:16px; font-weight:bold;">Sipas Kamarierit</MudText>
 
 <MudPaper Class="rounded-lg" Elevation="3">
@@ -34,7 +37,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        Orders = await new Data.GetData().GetDetaletAsync();
+        Orders = (await OrderService.GetOrders()).ToList();
     }
 
     public IEnumerable<KamDheVlerat> GetSipasKamarieritTotal()
@@ -42,12 +45,12 @@
         IEnumerable<KamDheVlerat> kamarierat = from d in Orders
                                                group d by new
                                                {
-                                                   d.kam
+                                                   d.Kamarieri
                                                } into grp
                                                select new KamDheVlerat()
                                                 {
-                                                    Kamarieri = grp.Key.kam,
-                                                    Vlera = grp.Sum(s => decimal.Parse(s.vlera))
+                                                    Kamarieri = grp.Key.Kamarieri,
+                                                    Vlera = grp.Sum(d => decimal.Parse(d.Vlera))
                                                 };
         return kamarierat.OrderByDescending(p => p.Vlera).ToList();
     }

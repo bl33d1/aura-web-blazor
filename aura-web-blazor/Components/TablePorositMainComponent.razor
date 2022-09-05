@@ -1,5 +1,7 @@
 ﻿@using Data.Models
+@using aura_web_blazor.Services
 @inject NavigationManager UriHelper
+@inject IOrderService OrderService
 <MudText Align="Align.Center" Style="margin-bottom:15px;margin-top:30px; font-size:16px; font-weight:bold;">Faturat e fundit</MudText>
 
 <MudTable Class="rounded-lg" Striped=false Hover=true Dense=true Style="font-size:small;;" Items="@GetFaturat(true)" Breakpoint="Breakpoint.None" >
@@ -11,11 +13,11 @@
         <MudTh Style="font-weight:bold">Vlera</MudTh>
     </HeaderContent>
     <RowTemplate>
-        <MudTd Style="text-align:left">@context.artikulli</MudTd>
-        <MudTd Style="text-align:center">@context.sasia</MudTd>
-        <MudTd Style="text-align:center">@context.tav <br /> @DateTime.Parse(context.ora).ToString("HH:mm:ss")</MudTd>
-        <MudTd Style="text-align:center">@context.kam</MudTd>
-        <MudTd >@decimal.Parse(context.vlera).ToString("0.00")€</MudTd>
+        <MudTd Style="text-align:left">@context.Artikulli</MudTd>
+        <MudTd Style="text-align:center">@context.Sasia</MudTd>
+        <MudTd Style="text-align:center">@context.Tavolina <br /> @DateTime.Parse(context.Ora).ToString("HH:mm:ss")</MudTd>
+        <MudTd Style="text-align:center">@context.Kamarieri</MudTd>
+        <MudTd >@decimal.Parse(context.Vlera).ToString("0.00")€</MudTd>
     </RowTemplate>
 @*    <FooterContent >
             
@@ -38,22 +40,22 @@
 
     protected override async Task OnInitializedAsync()
     {
-        Orders = await new Data.GetData().GetDetaletAsync();
+        Orders = (await OrderService.GetOrders()).ToList();
     }
+
     void Navigate()
     {
         if(!TakeAll)
         UriHelper.NavigateTo("faturat");
         else
         UriHelper.NavigateTo("/");
-
     }
 
     protected IEnumerable<DetaletEFaturimit> GetFaturat(bool TakeAll)
     {
         if (TakeAll)
-            return Orders.OrderByDescending(d => DateTime.Parse(d.ora));
+            return Orders.OrderByDescending(d => DateTime.Parse(d.Ora));
         else
-            return Orders.OrderByDescending(d => DateTime.Parse(d.ora)).Take(15);
+            return Orders.OrderByDescending(d => DateTime.Parse(d.Ora)).Take(15);
     }
 }

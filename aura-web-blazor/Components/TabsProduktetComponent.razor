@@ -1,4 +1,6 @@
 ﻿@using Data.Models
+@using aura_web_blazor.Services;
+@inject IOrderService OrderService;
 <style>
     .mud-tabs-panels {
         padding: 0px !important;
@@ -25,27 +27,29 @@
 
 @code {
 
-    private IEnumerable<DetaletEFaturimit>? Orders;
     private IEnumerable<Produktet>? Prods;
+
+    
+    public IEnumerable<DetaletEFaturimit> Orders { get; set; }
 
 
     protected override async Task OnInitializedAsync()
     {
-        Orders = await new Data.GetData().GetDetaletAsync();
+        Orders = (await OrderService.GetOrders()).ToList();
         Prods = from d in Orders
                         group d by new
                         {
-                            d.artikulli,
-                            d.qmimi,
-                            d.nj2
+                            d.Artikulli,
+                            d.Qmimi,
+                            d.Nj2
                         } into grp
                         select new Produktet
                         {
-                            Produkti = grp.Key.artikulli,
-                            Qmimi = decimal.Parse(grp.Key.qmimi),
-                            Sasia = grp.Sum(d => int.Parse(d.sasia)),
-                            Vlera = grp.Sum(d => decimal.Parse(d.vlera)),
-                            Nj2 = grp.Key.nj2
+                            Produkti = grp.Key.Artikulli,
+                            Qmimi = grp.Key.Qmimi,
+                            Sasia = grp.Sum(d => int.Parse(d.Sasia)),
+                            Vlera = grp.Sum(d => decimal.Parse(d.Vlera)),
+                            Nj2 = grp.Key.Nj2
                         };
 
     }
