@@ -6,7 +6,8 @@ aura is a Admin Panel created to help gastronomy business owners to have an insi
 The legacy code of the POS software is written in VB.NET for Applications using Access 2003, so there are a lot of work-arounds in order to find a working solution. This is the third version of this app, the first two were created using Web Forms from .NET Framework 4.8. It was upgraded to a SPA technology for performance reasons and scalability but also was interested knowing how it works. 
 #
 ## [Check out 'aura'](https://blazor.intouch-ks.com/)  
-#
+
+
 
 ## Tools used to create this project
 ### FRONT END
