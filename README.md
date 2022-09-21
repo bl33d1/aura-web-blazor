@@ -1,12 +1,15 @@
 # aura Admin Panel
 
-## To see the latest version of the project navigate to [api-implement](https://github.com/bl33d1/aura-web-blazor/tree/api-implement) branch!
+
 
 aura is a Admin Panel created to help gastronomy business owners to have an insight on their daily sales report remotely via a web app. It was created as a add-on to an existing POS software which is active for more than 15 years on hundred of local businesses. 
 
 The legacy code of the POS software is written in VB.NET for Applications using Access 2003, so there are a lot of work-arounds in order to find a working solution. This is the third version of this app, the first two were created using Web Forms from .NET Framework 4.8. It was upgraded to a SPA technology for performance reasons and scalability but also was interested knowing how it works. 
 #
 ## [Check out 'aura'](https://blazor.intouch-ks.com/)  
+
+## To see the latest version of the projects mentioned here navigate to [api-implement](https://github.com/bl33d1/aura-web-blazor/tree/api-implement) branch!
+
 
 
 
