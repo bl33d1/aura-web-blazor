@@ -1,5 +1,6 @@
 # aura Admin Panel
 
+## To see the latest version of the project navigate to [api-implement](https://github.com/bl33d1/aura-web-blazor/tree/api-implement) branch!
 
 aura is a Admin Panel created to help gastronomy business owners to have an insight on their daily sales report remotely via a web app. It was created as a add-on to an existing POS software which is active for more than 15 years on hundred of local businesses. 
 
